@@ -1,0 +1,26 @@
+# Render Manager — maintains the rich-text format contract + render layer. Only
+# active when the rich-text frontend is enabled (OPENOVEL_ENABLE_FORMAT_CONTRACT);
+# loadAgentConfigs drops it otherwise.
+id: render
+kind: render-maintenance-agent
+role: subagent
+modelProfile: storykeeper
+maxSteps: 24
+maxTokens: 9000
+temperature: 0.35
+toolConcurrency: 2
+domain: render
+tools: [read, edit, write, grep, glob, explain]
+writeScope:
+  - story/render/**
+  - story/format/**
+readScope:
+  - story/**
+prompt: renderManagerContract
+enabledWhen: format-contract
+# While the reader displays custom blocks in the plain host style, per-turn
+# runs are pure idle burn (no block authoring reaches the reader), so the agent
+# drops out of turn broadcasts and stays MESSAGE-woken only (forAgents, e.g.
+# the Image agent's include opt-in request). It rejoins turn broadcasts the
+# moment the reader re-enables custom styling (evaluated per broadcast).
+turnBroadcastWhen: custom-rich-blocks

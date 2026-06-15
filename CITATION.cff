@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use openovel in your research, please cite it as below."
+title: openovel
+abstract: >-
+  An open-source, local-first AI interactive-fiction runtime built on a
+  dual-loop design: a fast foreground narrator and an asynchronous background
+  agent team that maintain continuity, memory, and world state in plain files.
+type: software
+authors:
+  - family-names: Zhou
+    given-names: Jacob
+repository-code: "https://github.com/Feed-Scription/openovel"
+url: "https://github.com/Feed-Scription/openovel"
+license: Apache-2.0
+version: 0.1.0
+date-released: "2026-06-15"
+keywords:
+  - interactive fiction
+  - artificial intelligence
+  - large language models
+  - local-first
+  - agents

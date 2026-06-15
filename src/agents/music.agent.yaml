@@ -1,0 +1,21 @@
+# Music agent (experimental) — curates immersive music AHEAD of the plot into a
+# catalog (story/music/CATALOG.json) keyed by SEMANTIC SHORT ID, then hands the
+# Showrunner the narrator-facing cue guidance. The narrator only ever references
+# a short id — never a trackId, never a URL; nothing is downloaded. Only active
+# when OPENOVEL_ENABLE_MUSIC_GEN is on; loadAgentConfigs drops it otherwise.
+id: music
+kind: music-maintenance-agent
+role: subagent
+modelProfile: storykeeper
+maxSteps: 18
+maxTokens: 8000
+temperature: 0.4
+toolConcurrency: 2
+domain: music
+tools: [read, write, grep, glob, explain, music_search]
+writeScope:
+  - story/music/**
+readScope:
+  - story/**
+prompt: musicAgentContract
+enabledWhen: music-gen

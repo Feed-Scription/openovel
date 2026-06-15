@@ -1,0 +1,760 @@
+{
+  "app": {
+    "title": "openovel",
+    "noStoryLabel": ""
+  },
+  "header": {
+    "home": "Home",
+    "homeConfirm": "Returning to the library leaves the current story; unsaved progress is dropped from this view. Go back?",
+    "errorsBadge": "{{count}} error",
+    "errorsBadge_plural": "{{count}} errors",
+    "sidebar": "Toggle sidebar",
+    "settings": "Settings"
+  },
+  "footer": {
+    "idle": "idle",
+    "placeholder": "type an action, or / for commands",
+    "turn": "turn {{count}}"
+  },
+  "options": {
+    "hint": "Press {{keys}} or click to choose · use the pencil to edit before sending"
+  },
+  "settings": {
+    "title": "Settings",
+    "done": "Done",
+    "tabs": {
+      "ai": "AI",
+      "story": "Story",
+      "presentation": "Presentation",
+      "system": "System",
+      "apikeys": "API Keys",
+      "providers": "Providers",
+      "routing": "Model Routing",
+      "agents": "Agents",
+      "status": "Service Status",
+      "preferences": "Preferences",
+      "behavior": "Behavior",
+      "image": "Image",
+      "music": "Music",
+      "tts": "Read Aloud",
+      "display": "Display",
+      "environment": "Environment"
+    },
+    "mode": {
+      "label": "Settings complexity",
+      "simple": "Simple",
+      "advanced": "Advanced",
+      "preferenceTitle": "Settings complexity",
+      "preferenceDescription": "Simple keeps just what you need to start reading. Advanced adds every service, model, and behind-the-scenes control."
+    },
+    "subtabs": {
+      "ai": {
+        "models": "Text",
+        "search": "Search",
+        "image": "Image",
+        "speech": "Speech",
+        "narrative": "Narrative",
+        "maintenance": "Maintenance",
+        "subagents": "Subagents",
+        "residentAgents": "Resident Agents",
+        "catalog": "Catalog & Tiers",
+        "groups": {
+          "services": "API",
+          "routing": "Routing",
+          "agents": "Agents"
+        }
+      },
+      "story": {
+        "memory": "Memory",
+        "behavior": "Behavior"
+      },
+      "presentation": {
+        "display": "Display",
+        "storyMedia": "Story Media"
+      },
+      "system": {
+        "preferences": "Preferences",
+        "status": "Status",
+        "environment": "Environment"
+      }
+    },
+    "simple": {
+      "story": {
+        "title": "Defaults are enough",
+        "description": "Story behavior and user memory already have defaults, so you can start without configuring them.",
+        "body": "Switch to Advanced when you want to fine-tune the narrator's long-term taste, what happens behind the scenes, how stories begin, or how choices are suggested."
+      }
+    },
+    "pages": {
+      "ai": {
+        "kicker": "AI configuration",
+        "title": "Models and AI services",
+        "description": "Simple sets up just the text model. Advanced adds search, images, speech, and finer control over which model handles what."
+      },
+      "story": {
+        "kicker": "Story configuration",
+        "title": "Narrative behavior and user memory",
+        "description": "Set how new stories begin, what happens behind the scenes, and the preferences the narrator keeps in mind."
+      },
+      "presentation": {
+        "kicker": "Presentation",
+        "title": "Reading presentation",
+        "description": "Only reading UI lives here: language, font, size, reveal speed, and background art display."
+      },
+      "system": {
+        "kicker": "System",
+        "simpleTitle": "Preferences",
+        "simpleDescription": "Choose how much of Settings is visible. Keep the default low-friction, or switch to Advanced for full control.",
+        "title": "Runtime status and environment",
+        "description": "Inspect service status and configure work directories, proxies, and runtime environment values."
+      }
+    },
+    "chapters": {
+      "llm": {
+        "title": "Text model providers",
+        "description": "Choose the LLM provider, save API keys, and configure the base endpoint and default models."
+      },
+      "search": {
+        "title": "Search providers",
+        "description": "Choose the web search provider and configure its API key; search is a peer capability to text models."
+      },
+      "routing": {
+        "title": "Models and call routing",
+        "description": "Send each kind of request — narration, suggested choices, summaries, and behind-the-scenes helpers — to whichever provider and model you like."
+      },
+      "agents": {
+        "title": "Agent capability",
+        "description": "Set each resident Agent's model, tool permissions, budget, and concurrency limits."
+      },
+      "modelCatalog": {
+        "title": "Model catalog and defaults",
+        "description": "Add extra models exposed by providers, then tune the small/large foreground/background defaults if needed."
+      },
+      "narrativeCalls": {
+        "title": "Narrative calls",
+        "description": "Choose the models for narration, the choices readers see, and quick background helpers."
+      },
+      "maintenanceCalls": {
+        "title": "Maintenance calls",
+        "description": "Pick the models for behind-the-scenes upkeep — story-keeping, memory, summaries, and reading web pages."
+      },
+      "subagentClasses": {
+        "title": "Subagent classes",
+        "description": "Set defaults for the helper agents a task can call on: general, continuity, research, and planning."
+      },
+      "residentAgents": {
+        "title": "Resident Agents",
+        "description": "Tune each always-available Agent's model, tools, budget, temperature, and concurrency."
+      },
+      "behavior": {
+        "title": "Story behavior",
+        "description": "Set how new stories begin, how the reader interacts, and how the behind-the-scenes story team runs."
+      },
+      "memory": {
+        "title": "Memory and preferences",
+        "description": "Inspect model-maintained story memory, edit your reading preferences, and control cross-story memory."
+      },
+      "display": {
+        "title": "Reading display",
+        "description": "Configure the reading interface language, layout, text reveal, text markings, and visual layers."
+      },
+      "storyMedia": {
+        "title": "Story media and modes",
+        "description": "Control whether stories can output rich blocks, media, illustrations, scene backdrops, and comic mode; image credentials still live under AI → Image."
+      },
+      "image": {
+        "title": "Story illustrations",
+        "description": "Set up how your story creates its own pictures."
+      },
+      "tts": {
+        "title": "Read aloud",
+        "description": "Set up the read-aloud voice and speed."
+      },
+      "preferences": {
+        "title": "Preferences",
+        "description": "Choose how much of Settings is visible. Simple is for daily use; Advanced exposes the full control surface."
+      },
+      "status": {
+        "title": "Service status",
+        "description": "See what's connected and working right now."
+      },
+      "environment": {
+        "title": "Environment",
+        "description": "Configure work directories, HTTP proxy, and runtime environment."
+      }
+    },
+    "customEndpoint": {
+      "add": "+ Custom endpoint",
+      "create": "add",
+      "namePlaceholder": "endpoint name",
+      "delete": "Delete endpoint",
+      "deleteConfirm": "Delete this endpoint and its saved key?"
+    },
+    "tts": {
+      "loading": "loading…",
+      "providerVolcano": "Volcano (Doubao)",
+      "customEndpoint": "OpenAI-compatible speech endpoint",
+      "customBaseUrl": "Base URL",
+      "customModel": "Model",
+      "customVoice": "Voice",
+      "customSampleRate": "PCM sample rate",
+      "customHint": "POSTs {baseUrl}/audio/speech with response_format=pcm, one sentence per request. Sentence-synced reading keeps working.",
+      "enable": {
+        "label": "Read the story aloud (Doubao / Volcano)",
+        "description": "Reads the story aloud as it's written, with the words appearing in time with the voice."
+      },
+      "credentials": "Volcano Engine sign-in",
+      "voice": "Voice",
+      "voiceHint": "Enter the voice you enabled in your Volcano console (large-model voices usually end in _bigtts).",
+      "speed": "Speed"
+    },
+    "apikeys": {
+      "llm": "LLM",
+      "pickHint": "Pick a provider above to set the API key and test the connection.",
+      "save": "save",
+      "show": "show",
+      "hide": "hide",
+      "clear": "clear",
+      "testing": "testing connection…",
+      "testConnection": "Test connection",
+      "shadowTitle": "Overridden by another settings file",
+      "shadowHint": "These values come from a higher-priority settings layer and win over this page. Edit or remove:",
+      "testOk": "✓ {{provider}}/{{model}} · {{latency}}ms",
+      "modelDetails": "Model details",
+      "alias": "Alias (display name)",
+      "webSearch": "Web search",
+      "custom": {
+        "title": "Custom providers",
+        "intro": "Define any number of OpenAI-compatible or Anthropic-format endpoints. Each becomes a provider choice in Model routing and Agents, and can be set as the default here.",
+        "add": "+ Add custom provider",
+        "newTitle": "New custom provider",
+        "name": "Name",
+        "alias": "Alias (provider id)",
+        "aliasPlaceholder": "fast-proxy",
+        "aliasHint": "auto-generated from the name when empty",
+        "aliasRenameHint": "renames to",
+        "kind": "Protocol",
+        "kindOpenai": "OpenAI-compatible",
+        "kindAnthropic": "Anthropic Messages",
+        "apiKey": "API key",
+        "smallModel": "Default model",
+        "largeModel": "Background model",
+        "thinking": "Thinking",
+        "thinkingHint": "Follow per-call (default)",
+        "thinkingOff": "Always off",
+        "thinkingOn": "Always on",
+        "thinkingAuto": "Passthrough (endpoint default)",
+        "thinkingHelp": "Follow per-call keeps narration fast (no thinking) and lets agents think — sends { thinking: { type } } like Kimi/MiMo. Use Passthrough only if the endpoint 400s on that field.",
+        "reasoningEffort": "Reasoning effort",
+        "reasoningDefault": "(default)",
+        "save": "save",
+        "cancel": "cancel",
+        "delete": "delete",
+        "confirmDelete": "confirm delete?",
+        "keySet": "key set",
+        "keyNotSet": "no key"
+      }
+    },
+    "routing": {
+      "kicker": "Model routing",
+      "title": "Assign models by call",
+      "description": "Keep ordinary setup on Providers; use this advanced page only for routing. Provider, model, and parameter changes save automatically and apply to the next model request.",
+      "overview": "Model routing overview",
+      "applies": "applies next call",
+      "providerCount": "providers",
+      "customRoutes": "custom routes",
+      "customModels": "custom models",
+      "search": "Search calls, models, or providers",
+      "groups": {
+        "base": "Base defaults",
+        "narrative": "Narrative calls",
+        "maintenance": "Maintenance calls",
+        "subagents": "Subagent classes",
+        "other": "Other calls"
+      },
+      "catalogTitle": "Model catalog",
+      "catalogDescription": "{{builtin}} built-in defaults are already available; add only the extra models exposed by a provider.",
+      "catalogCount": "{{count}} custom",
+      "provider": "Provider",
+      "model": "Model",
+      "label": "Label",
+      "role": "Run lane",
+      "temperature": "Temperature",
+      "maxTokens": "Max tokens",
+      "timeoutMs": "Timeout ms",
+      "chunkTimeoutMs": "Chunk timeout ms",
+      "advancedParameters": "Advanced parameters",
+      "advancedParametersHint": "Run lane, sampling, and timeout controls stay hidden until you need fine control.",
+      "defaultParameters": "default parameters",
+      "defaultValue": "default",
+      "chooseProvider": "choose provider",
+      "modelPlaceholder": "model id",
+      "labelPlaceholder": "optional",
+      "addModel": "add",
+      "removeModel": "remove {{model}}",
+      "noCustomModels": "No custom models. Built-in defaults are already available in route selectors.",
+      "providerDefault": "provider default",
+      "useDefaultProvider": "default ({{provider}})",
+      "useProviderDefault": "default ({{model}})",
+      "foreground": "Foreground lane",
+      "background": "Background lane",
+      "custom": "custom",
+      "saving": "saving",
+      "reset": "reset",
+      "loading": "loading routing…",
+      "noMatches": "No matching calls in this group.",
+      "loadError": "Failed to load routing: {{error}}",
+      "savingRoute": "saving route…",
+      "savedRoute": "saved · next call uses this route",
+      "savingModel": "saving model…",
+      "savedModel": "model saved",
+      "removingModel": "removing model…",
+      "removedModel": "model removed",
+      "saveFailed": "save failed: {{error}}",
+      "removeFailed": "remove failed: {{error}}"
+    },
+    "agents": {
+      "kicker": "Agent configuration",
+      "title": "Assign capability by Agent",
+      "description": "Each resident Agent can have its own model, tool permissions, and work budget. The list shows effective values first; expand only when you need to tune.",
+      "overview": "Agent configuration overview",
+      "applies": "applies next wake",
+      "agentCount": "Agents",
+      "customAgents": "custom Agents",
+      "toolCount": "available tools",
+      "custom": "custom",
+      "defaultModel": "default model",
+      "defaultProvider": "default provider",
+      "toolsSelected": "{{selected}} / {{total}} tools",
+      "budgetSummary": "{{steps}} steps · {{tokens}} tokens",
+      "maxSteps": "max steps",
+      "maxTokens": "max tokens",
+      "temperature": "temperature",
+      "toolConcurrency": "tool concurrency",
+      "toolAccess": "Tool access",
+      "advancedModel": "Advanced model settings",
+      "advancedModelHint": "The run lane is usually automatic; adjust only when changing foreground/background routing.",
+      "savingShort": "saving",
+      "resetAction": "reset",
+      "loading": "loading agents…",
+      "loadError": "Failed to load agents: {{error}}",
+      "saving": "saving {{agent}}…",
+      "saved": "saved · next agent run uses this config",
+      "resetting": "resetting {{agent}}…",
+      "reset": "agent reset",
+      "saveFailed": "save failed: {{error}}",
+      "resetFailed": "reset failed: {{error}}"
+    },
+    "image": {
+      "intro": "Set up image generation so your story can create its own pictures. Even without this it can still find images online; creating new ones needs a provider, API key, and model.",
+      "baseUrl": "Base URL",
+      "apiKey": "API key",
+      "model": "Model",
+      "path": "Generation path",
+      "size": "Default size",
+      "test": "Test generation",
+      "testing": "testing…",
+      "configured": "generation configured",
+      "notConfigured": "base URL + API key + model required",
+      "costWarning": "Warning: testing sends a real image generation request and may consume paid provider credits.",
+      "costConfirm": "Run a real image generation test now? This request may incur provider charges.",
+      "testOk": "Image generation works",
+      "testFailed": "Image generation failed",
+      "previewAlt": "Generated image test preview"
+    },
+    "music": {
+      "intro": "Connect NetEase Cloud Music so your story can play music that fits each scene. You'll need a developer app from NetEase — enter its details below and sign in, then turn on background music under Behavior.",
+      "appId": "App ID",
+      "appIdPlaceholder": "From your NetEase app",
+      "appSecret": "App secret",
+      "saved": "saved",
+      "leaveBlank": "Leave blank to keep the saved one",
+      "server": "Server address (optional)",
+      "device": "Device info (advanced)",
+      "deviceHint": "Most setups can leave this empty — fill it only if your NetEase app needs specific device details.",
+      "save": "Save",
+      "signedIn": "Signed in",
+      "notSignedIn": "Not signed in yet",
+      "scanToSignIn": "扫码登录",
+      "signOut": "Sign out",
+      "accessToken": "Access token",
+      "accessTokenPlaceholder": "Paste your access token to sign in",
+      "signIn": "Sign in",
+      "test": "Test connection",
+      "testing": "Testing…",
+      "notConnected": "Couldn't connect",
+      "connected": "Connected.",
+      "ready": "Connected — music is ready to play.",
+      "needMembership": "Connected, but this song wouldn't play — your account may need a membership.",
+      "signInToPlay": "Connected. Sign in to play music.",
+      "saveFailed": "Couldn't save",
+      "qr": {
+        "loading": "Loading…",
+        "scan": "Scan this with the NetEase Cloud Music app",
+        "confirm": "Confirm on your phone",
+        "expired": "The code expired — try again",
+        "failed": "Couldn't start"
+      }
+    },
+    "display": {
+      "groups": {
+        "interface": "Interface and layout",
+        "readingFlow": "Reading flow",
+        "textMarks": "Text markings",
+        "visualLayers": "Visual layers"
+      },
+      "colorTheme": "Color scheme",
+      "fontFamily": "Story font",
+      "fontSize": "Font size: {{size}}px",
+      "narrationSpeed": "Reading speed: {{cpm}} cpm",
+      "narrationSpeedUnlimited": "Reading speed: unlimited",
+      "narrationSpeedHint": "How fast the words appear as you read. Takes effect right away.",
+      "autoScrollOff": "Don't auto-scroll while the story streams",
+      "backgroundArt": "Show background art when a scene has a cover image",
+      "sceneBackdrop": "Show the scene backdrop image behind the story",
+      "customRichBlocks": "Let story cards use their own style",
+      "language": "Interface language",
+      "langEn": "English",
+      "langZh": "简体中文 (Simplified Chinese)",
+      "highlightDialogue": "Tint quoted dialogue",
+      "highlightNames": "Highlight character names",
+      "layoutScale": "Layout width: {{pct}}%",
+      "layoutScaleHint": "Proportionally widens the reading column and library covers — for large displays."
+    },
+    "preferences": {
+      "label": "User memory",
+      "hint": "This is what the narrator reads when shaping voice and style. Edit freely — plain markdown, one fact per line is fine.",
+      "hintEmpty": " (Empty — first save creates the file.)",
+      "form": "Form",
+      "markdown": "Markdown",
+      "save": "Save",
+      "revert": "Revert",
+      "reset": "Reset",
+      "confirmReset": "Reset reader preferences? This clears the global USER.md preferences and cannot be undone."
+    },
+    "memory": {
+      "loading": "loading memory…",
+      "loadError": "Failed to load memory: {{error}}",
+      "viewerTitle": "Model memory",
+      "viewerHintSimple": "Current story memory stays inside this novel; cross-story memory can be switched off above.",
+      "viewerHintAdvanced": "Inspect the memory files the model reads or maintains.",
+      "reset": "Reset",
+      "resetCrossStory": "Reset cross-story",
+      "resetting": "resetting…",
+      "resetDone": "reset",
+      "resetFailed": "reset failed: {{error}}",
+      "saveFailed": "save failed: {{error}}",
+      "confirmReset": "Reset “{{target}}”? This cannot be undone.",
+      "crossStoryDisabled": "Cross-story memory is off. Existing notes are visible here but are not injected into model context and will not be updated.",
+      "crossStory": {
+        "label": "Cross-story Memory",
+        "on": "on",
+        "off": "off",
+        "description": "When on, model-observed reader habits and reusable references can carry across novels. Turn it off to keep model memory story-local."
+      },
+      "targets": {
+        "story": {
+          "label": "Current Story Memory",
+          "empty": "# Story Memory\n\n(No long-term memory for this story yet.)"
+        },
+        "user": {
+          "label": "Reading Preferences",
+          "empty": "# User Memory\n\n(No saved reading preferences yet.)"
+        },
+        "observed": {
+          "label": "Cross-story Observations",
+          "empty": "# Observed Memory\n\n(No model-observed memory yet.)"
+        },
+        "references": {
+          "label": "Shared References",
+          "empty": "# Shared References\n\n(No shared references yet.)"
+        },
+        "crossStory": {
+          "label": "Cross-story Memory"
+        }
+      }
+    },
+    "behavior": {
+      "loadError": "Failed to load behavior: {{error}}",
+      "loading": "loading…",
+      "applies": {
+        "nextTurn": "applies next turn",
+        "nextSession": "applies next session"
+      },
+      "sourcedFrom": "sourced from {{source}}",
+      "groups": {
+        "storyStart": {
+          "title": "Opening and setup",
+          "description": "Controls how deeply a new story prepares before the first scene, and whether you preview the narrator voice first."
+        },
+        "interaction": {
+          "title": "Reader interaction",
+          "description": "Controls whether each turn ends with suggested actions the reader can pick directly."
+        },
+        "engine": {
+          "title": "Behind-the-scenes story team",
+          "description": "Controls who maintains the world, characters, pacing, and files in the background, plus which local tools they can use."
+        },
+        "diagnostics": {
+          "title": "Testing and recording",
+          "description": "For debugging, comparison runs, and raw model-call capture; everyday reading usually does not need these."
+        },
+        "richStory": {
+          "title": "Rich blocks and story assets",
+          "description": "Controls whether stories can output structured cards and reference media placed in the story's media folder."
+        },
+        "storyMedia": {
+          "title": "Illustrations, backdrops, and comic mode",
+          "description": "Controls whether pictures, scene backdrops, and comic mode can become part of the narrative output."
+        }
+      },
+      "toggles": {
+        "optionsEnabled": {
+          "label": "Suggest choices each turn",
+          "description": "After each turn, offer a few numbered choices you can pick instead of typing."
+        },
+        "displayPacing": {
+          "label": "Reveal text at a reading pace",
+          "description": "Show the words at a calm, steady pace. Turn off to show them the moment they arrive."
+        },
+        "residentTeam": {
+          "label": "Story team",
+          "description": "Behind the scenes, a small team keeps track of your world, pacing, characters, and memory. On by default — turn off to use a single, lighter-weight helper."
+        },
+        "crossStoryMemory": {
+          "label": "Cross-story Memory",
+          "description": "Let openovel carry model-observed reader habits and reusable references into other novels. Turn off to keep model memory story-local; existing cross-story memory remains until you reset it."
+        },
+        "formatContract": {
+          "label": "Rich rendering",
+          "description": "Let your story show more than plain text — status bars, stat panels, and terminal-style blocks — when it fits the scene."
+        },
+        "storyIncludes": {
+          "label": "Media in stories",
+          "description": "Let stories show images, video, audio, or text you place in their media folder. Needs Rich rendering on."
+        },
+        "imageGen": {
+          "label": "Story illustrations",
+          "description": "Let your story show pictures it finds or creates as the plot moves forward. Turns on Rich rendering and media too — set it up under Settings → Image."
+        },
+        "imageBackground": {
+          "label": "Scene backgrounds",
+          "description": "Let prepared scene images appear as a soft, dimmed backdrop behind the story text for extra atmosphere. The app keeps the text fully readable with a built-in veil. Turns on Rich rendering and media too; pairs best with Story illustrations."
+        },
+        "characterSheets": {
+          "label": "Character sheets (experimental)",
+          "description": "Have the image helper keep a visual reference for each major character from the character cards — a written look spec plus a generated reference sheet — and hold every later illustration to it. Needs Story illustrations on."
+        },
+        "comicMode": {
+          "label": "Comic mode (experimental)",
+          "description": "Adds a per-story switch to the library card menu: a story in comic mode plays as a picture-story strip (generated panels with captions) instead of prose. Set up image generation under Settings → Image first.",
+          "menuOn": "Switch to comic mode",
+          "menuOff": "Back to prose mode",
+          "needsImageProvider": "Comic mode generates pictures every turn. Configure image generation under Settings → Image first."
+        },
+        "fastMode": {
+          "label": "Fast mode (experimental)",
+          "description": "Adds a per-story switch to the library card menu: a story in fast mode plays in short bursts that move the plot quickly and stop at the next meaningful decision, with the choices carrying the weight.",
+          "menuOn": "Switch to fast mode",
+          "menuOff": "Back to normal pacing"
+        },
+        "musicGen": {
+          "label": "Background music (experimental)",
+          "description": "Plays mood music that fits your story. A small bar at the top of the window lets you pause and set the volume. Connect your music account under Settings → Music first."
+        },
+        "initNarratorPreview": {
+          "label": "Preview the voice at setup",
+          "description": "When starting a new story, hear the narrator's voice on a draft and fine-tune it over a round or two before you begin. Adds a little time up front."
+        },
+        "bashTool": {
+          "label": "Shell tool for the story team (advanced)",
+          "description": "Let the behind-the-scenes team run shell commands (such as jq) to read and update your world's data. Runs in an OS sandbox: no internet access, and it can only write inside this story's files. Off by default; needs macOS, or Linux with bubblewrap."
+        },
+        "disableBackground": {
+          "label": "Pause all background work (testing)",
+          "description": "Stop everything that happens behind the scenes between turns. For testing and comparisons."
+        },
+        "disableStorykeeper": {
+          "label": "Pause story-keeping (testing)",
+          "description": "Stop the behind-the-scenes helper that keeps track of canon and characters."
+        },
+        "disableMemoryReview": {
+          "label": "Pause memory updates (testing)",
+          "description": "Stop the behind-the-scenes helper that builds up long-term memory."
+        },
+        "disableContextInserts": {
+          "label": "Pause auto context cards (testing)",
+          "description": "Stop automatically bringing in the most relevant character and world notes each turn."
+        },
+        "recordCalls": {
+          "label": "Record raw model calls (developer)",
+          "description": "Save every model call — the exact prompt sent and the full reply — to story/packets/calls.jsonl, for building training data. Off by default; produces large files."
+        }
+      }
+    }
+  },
+  "onboarding": {
+    "title": "Welcome to openovel",
+    "subtitle": {
+      "apiKey": "Connect your LLM",
+      "language": "Default language",
+      "styleSample": "Prose reference (optional)",
+      "styleTags": "Style preferences (optional)"
+    },
+    "step": "step {{current}} / {{total}}",
+    "apiKeyLead": "Pick a provider and paste a key. Change it later from the gear icon.",
+    "stylePlaceholder": "A passage, book, author, or genre you like — or leave empty.",
+    "languageOptions": {
+      "english": "English",
+      "englishHint": "default",
+      "simplifiedChinese": "简体中文",
+      "simplifiedChineseHint": "Simplified Chinese",
+      "other": "Other / mixed…",
+      "otherHint": "type your own",
+      "otherPlaceholder": "e.g. 日本語 / Español / mostly English with occasional Japanese"
+    },
+    "skip": "Skip setup",
+    "back": "← Back",
+    "continue": "Continue →",
+    "finish": "Finish setup →"
+  },
+  "preferenceForm": {
+    "language": "Default story language",
+    "proseReference": "Prose reference (optional)",
+    "proseReferencePlaceholder": "A passage you like, a book, an author, or a genre whose voice the narrator should echo.",
+    "styleTags": "Style preferences"
+  },
+  "initChat": {
+    "initializing": "Initializing",
+    "greeting": "What kind of story should \"{{storyName}}\" become? Tell me a few sentences — or paste a full worldbook — and I'll start drafting the canon and characters.",
+    "resumedInterrupted": "The previous initialization was interrupted — continuing from where it left off…",
+    "resumeUnfinished": "This story's initialization never finished. The draft so far is restored; send the prefilled request to continue building on what was already written.",
+    "agentAsks": "Agent asks",
+    "draftReady": "Draft ready",
+    "completed": "Done:",
+    "errorsFolded": "{{count}} error",
+    "errorsFolded_plural": "{{count}} errors",
+    "agentTree": {
+      "runningTool": "{{count}} tool",
+      "runningTools": "{{count}} tools",
+      "needsAttention": "needs attention",
+      "thinking": "thinking...",
+      "done": "done"
+    },
+    "status": {
+      "drafting": "Agent is drafting your story…",
+      "revising": "Agent is applying your revision…"
+    },
+    "placeholder": {
+      "initial": "Describe the story you want, or paste a worldbook",
+      "running": "Add or revise anytime",
+      "revision": "Want to adjust anything?"
+    },
+    "send": "Send",
+    "sendFeedback": "Send",
+    "sendRevision": "Send revision",
+    "cancel": "Cancel",
+    "backToLibrary": "Back to library",
+    "replayBadge": "DEMO · replay",
+    "replayAgain": "Replay again",
+    "replayDone": "Done",
+    "enterInteractive": "Enter interactive mode →",
+    "enterInteractiveHint": "Lock in the current draft and start reading",
+    "askPlaceholder": "Your answer — Cmd-Enter to send",
+    "askMultiHint": "Select one or more, then confirm.",
+    "askMultiPlaceholder": "Add anything else (optional), then confirm — Cmd-Enter",
+    "answer": "Answer"
+  },
+  "share": {
+    "copy": "Copy as image",
+    "save": "Save as image",
+    "copied": "Copied to clipboard",
+    "saved": "Image saved",
+    "failed": "Couldn't make the image"
+  },
+  "storyNaming": {
+    "title": "Name your new story",
+    "hint": "Anything goes — letters, digits, CJK, spaces, colons, emoji.",
+    "placeholder": "My new story",
+    "back": "Back to library",
+    "prefsLabel": "Story preferences",
+    "useDefaults": "Use my defaults",
+    "useDefaultsHint": "track global preferences",
+    "customize": "Customize for this story",
+    "customizeHint": "override just for this book",
+    "create": "Create story"
+  },
+  "initDepth": {
+    "title": "Choose initialization depth",
+    "subtitle": "Pick once; change later in Settings.",
+    "hint": "Hover for details",
+    "zero": {
+      "title": "Zero init",
+      "short": "Your brief becomes the opening setup. No agent.",
+      "body": "Fastest start. No upfront LLM cost. The narrator picks the brief up on the first reader action and improvises from there."
+    },
+    "standard": {
+      "title": "Standard init",
+      "short": "Agent scaffolds the story with file tools.",
+      "body": "The init agent uses file tools to build foreground guidance, section files, up to 5 character cards, and durable memory from your brief. No web access."
+    },
+    "deep": {
+      "title": "Deep init",
+      "short": "Agent does web research first, then scaffolds.",
+      "body": "Best for fan-fiction or real-world settings. The agent searches the web for canon worldbuilding, character profiles, and relationships before writing, citing sources in durable memory and context cards. Longer init time (1-3 min)."
+    },
+    "settingLabel": "Initialization depth",
+    "settingHint": "Pops up on the first new story if unset. Change here to override for future stories.",
+    "unsetLabel": "Ask each new story"
+  },
+  "stories": {
+    "title": "From your library",
+    "hint": "←→↑↓ navigate · Enter to open · double-click to open",
+    "newStory": "New story",
+    "import": "Import…",
+    "searchPlaceholder": "Search stories…",
+    "sort": {
+      "label": "Sort by",
+      "recent": "Recent",
+      "name": "Name",
+      "size": "Size"
+    },
+    "menu": {
+      "rename": "Rename story",
+      "replayInit": "Replay init",
+      "resumeInit": "Continue initialization",
+      "resumeInitFailed": "Could not continue initialization",
+      "exportEpub": "Export as EPUB ebook…",
+      "exportTxt": "Export as TXT…",
+      "exportCurrent": "Export current snapshot…",
+      "exportInitial": "Export initial snapshot…",
+      "exportInitialMissing": "This story has no saved initial version (imported or created before this feature).",
+      "exportInitialMissingTag": "none saved",
+      "restart": "Restart from opening",
+      "restartConfirm": "Confirm restart",
+      "restartHint": "Current progress is saved as a version",
+      "restartMissing": "No saved opening to restart from",
+      "restartMissingTag": "no opening",
+      "restartFailed": "Could not restart",
+      "versions": "Saved versions",
+      "versionsLoading": "loading…",
+      "versionsEmpty": "no saved versions yet",
+      "versionLabel": "turn {{n}}",
+      "restoreVersion": "Switch back to this version",
+      "restoreFailed": "Could not restore version",
+      "delete": "Delete story",
+      "deleteActive": "Delete story",
+      "confirmDelete": "Confirm delete — no undo"
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "ok": "OK",
+    "saving": "saving…",
+    "saved": "saved"
+  },
+  "comic": {
+    "drawing": "Drawing…",
+    "panelFailed": "This panel could not be drawn"
+  }
+}

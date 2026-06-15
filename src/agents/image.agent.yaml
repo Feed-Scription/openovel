@@ -1,0 +1,22 @@
+# Image agent (experimental) — finds/generates images AHEAD of the plot into
+# story/includes/, then hands the Showrunner the narrator-facing embed guidance.
+# Only active when OPENOVEL_ENABLE_IMAGE_GEN is on (which also forces format-
+# contract + story-includes so the prepared images actually render);
+# loadAgentConfigs drops it otherwise.
+id: image
+kind: image-maintenance-agent
+role: subagent
+modelProfile: storykeeper
+maxSteps: 20
+maxTokens: 8000
+temperature: 0.4
+toolConcurrency: 2
+domain: image
+tools: [read, write, grep, glob, explain, websearch, webfetch, fetch_image, generate_image]
+writeScope:
+  - story/includes/**
+  - story/image/**
+readScope:
+  - story/**
+prompt: imageAgentContract
+enabledWhen: image-gen

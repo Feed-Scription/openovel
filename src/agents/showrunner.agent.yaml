@@ -1,0 +1,22 @@
+# The Showrunner — the resident coordinator (组长大总管). Does NO domain work; it
+# reads each turn's broadcast + the sub-agents' results and composes the
+# narrator-facing working set. It is the only agent allowed to write frontend/ +
+# guidance/. Successor to the monolithic Storykeeper.
+id: showrunner
+kind: coordinator
+role: coordinator
+modelProfile: storykeeper
+maxSteps: 75
+maxTokens: 16000
+temperature: 0.35
+toolConcurrency: 4
+domain: frontend
+tools: [read, edit, write, grep, glob, explain, task, task_status, monitor, loop]
+writeScope:
+  - story/frontend/**
+  - story/guidance/**
+readScope:
+  - story/**
+prompt: showrunnerContract
+coordinates: [cards, worldkeeper, director, memory, render]
+enabledWhen: always

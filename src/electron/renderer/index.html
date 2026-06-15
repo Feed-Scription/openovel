@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- img-src blob: is for renderer-created object URLs only (URL.createObjectURL
+         in our own code, e.g. the header tone probe in lib/imageTones.js and
+         snapdom's share rasterizer) — a blob: URL can only be minted by this
+         renderer context, so it adds no remote-content surface. -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data: blob: ovl-asset: ovl-music:; media-src 'self' ovl-asset: ovl-music:; connect-src 'self' ovl-asset: ovl-music:; script-src 'self'" />
+    <title>openovel</title>
+    <link rel="stylesheet" href="./bundle.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./bundle.js"></script>
+  </body>
+</html>

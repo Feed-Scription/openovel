@@ -1,0 +1,24 @@
+# Card Manager — owns context cards: which cards inject into context and the
+# content of each card. Carries web tools to research real entities; compresses
+# findings into card bodies (never raw to the narrator).
+id: cards
+kind: card-maintenance-agent
+role: subagent
+modelProfile: storykeeper
+maxSteps: 30
+maxTokens: 10000
+temperature: 0.35
+toolConcurrency: 4
+domain: cards
+tools: [read, edit, write, grep, glob, explain, bash, websearch, webfetch]
+# bash (grep/jq etc.) for cross-referencing card YAML/frontmatter across cards.
+# includeDangerous lets the dangerous-gated bash tool through when the operator
+# has enabled it (OPENOVEL_ENABLE_BASH_TOOL); bash itself stays OS-sandboxed.
+includeDangerous: true
+writeScope:
+  - story/cards/**
+  - story/context-cards/**
+readScope:
+  - story/**
+prompt: cardManagerContract
+enabledWhen: always

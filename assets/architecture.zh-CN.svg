@@ -1,0 +1,73 @@
+<svg viewBox="0 0 1000 650" xmlns="http://www.w3.org/2000/svg"
+     font-family="'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Source Han Sans CN', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="cNar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf9ee"/><stop offset="1" stop-color="#f8f0db"/></linearGradient>
+    <linearGradient id="cSub" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f9f2e1"/><stop offset="1" stop-color="#f1e8d1"/></linearGradient>
+    <linearGradient id="cBg"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7efdc"/><stop offset="1" stop-color="#efe4cc"/></linearGradient>
+    <radialGradient id="badge" cx="0.5" cy="0.36" r="0.72"><stop offset="0" stop-color="#fffdf6"/><stop offset="1" stop-color="#f3e4c2"/></radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d7a948"/><stop offset="1" stop-color="#b07d27"/></linearGradient>
+    <filter id="cardShadow" x="-8%" y="-22%" width="116%" height="150%"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#6e5526" flood-opacity="0.15"/></filter>
+    <filter id="iconShadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#6e5526" flood-opacity="0.2"/></filter>
+    <marker id="ah" viewBox="0 0 12 12" refX="9.5" refY="6" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse"><path d="M1,1.5 L10.5,6 L1,10.5 Q3.6,6 1,1.5 Z" fill="#b09a76"/></marker>
+  </defs>
+
+  <!-- 读者 -->
+  <circle cx="500" cy="48" r="25" fill="url(#badge)" stroke="#e6d09c" stroke-width="1.5" filter="url(#iconShadow)"/>
+  <circle cx="500" cy="43" r="8" fill="none" stroke="#8a7a55" stroke-width="2.2"/>
+  <path d="M486,67 Q500,50 514,67" fill="none" stroke="#8a7a55" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="500" y="90" text-anchor="middle" fill="#9a8358" font-size="13.5">读者</text>
+
+  <!-- 读者 <-> 叙述器（快循环） -->
+  <line x1="490" y1="104" x2="490" y2="128" stroke="#b09a76" stroke-width="2.2" stroke-linecap="round" marker-end="url(#ah)"/>
+  <line x1="510" y1="128" x2="510" y2="104" stroke="#b09a76" stroke-width="2.2" stroke-linecap="round" marker-end="url(#ah)"/>
+  <rect x="524" y="105" width="64" height="22" rx="11" fill="#fbf0d2" stroke="#dcbd72" stroke-width="1.1"/>
+  <text x="556" y="120" text-anchor="middle" fill="#a87d28" font-size="11.5" font-weight="700">快循环</text>
+
+  <!-- 前台叙述器 -->
+  <path d="M 828 130 c 11.201 0 16.802 0 21.08 2.18 a 20 20 0 0 1 8.74 8.74 c 2.18 4.278 2.18 9.879 2.18 21.08 L 860 196 c 0 11.201 0 16.802 -2.18 21.08 a 20 20 0 0 1 -8.74 8.74 c -4.278 2.18 -9.879 2.18 -21.08 2.18 L 172 228 c -11.201 0 -16.802 0 -21.08 -2.18 a 20 20 0 0 1 -8.74 -8.74 c -2.18 -4.278 -2.18 -9.879 -2.18 -21.08 L 140 162 c 0 -11.201 0 -16.802 2.18 -21.08 a 20 20 0 0 1 8.74 -8.74 c 4.278 -2.18 9.879 -2.18 21.08 -2.18 Z" fill="url(#cNar)" stroke="#e8d9b4" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <path d="M219.4,192.5 L196,206 L172.6,192.5 L172.6,165.5 L196,152 L219.4,165.5 Z" fill="url(#badge)" stroke="url(#gold)" stroke-width="1.8" filter="url(#iconShadow)"/>
+  <path d="M196,164 L201,174.5 L211.5,179 L201,183.5 L196,194 L191,183.5 L180.5,179 L191,174.5 Z" fill="url(#gold)"/>
+  <text x="250" y="173" fill="#38332b" font-size="23" font-weight="600">前台叙述器</text>
+  <text x="250" y="200" fill="#6f6657" font-size="14">快速 · 无工具 · 紧凑工作集</text>
+
+  <!-- 叙述器 <-> 基座 -->
+  <line x1="500" y1="234" x2="500" y2="280" stroke="#b09a76" stroke-width="2.2" stroke-linecap="round" marker-start="url(#ah)" marker-end="url(#ah)"/>
+  <text x="516" y="261" fill="#9a8358" font-size="13">读取 · 写入</text>
+
+  <!-- 文件原生基座 -->
+  <path d="M 828 286 c 11.201 0 16.802 0 21.08 2.18 a 20 20 0 0 1 8.74 8.74 c 2.18 4.278 2.18 9.879 2.18 21.08 L 860 378 c 0 11.201 0 16.802 -2.18 21.08 a 20 20 0 0 1 -8.74 8.74 c -4.278 2.18 -9.879 2.18 -21.08 2.18 L 172 410 c -11.201 0 -16.802 0 -21.08 -2.18 a 20 20 0 0 1 -8.74 -8.74 c -2.18 -4.278 -2.18 -9.879 -2.18 -21.08 L 140 318 c 0 -11.201 0 -16.802 2.18 -21.08 a 20 20 0 0 1 8.74 -8.74 c 4.278 -2.18 9.879 -2.18 21.08 -2.18 Z" fill="url(#cSub)" stroke="#e3d5b3" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <path d="M219.4,361.5 L196,375 L172.6,361.5 L172.6,334.5 L196,321 L219.4,334.5 Z" fill="url(#badge)" stroke="url(#gold)" stroke-width="1.8" filter="url(#iconShadow)"/>
+  <path d="M180,342 L192,342 L196,346 L213,346 L213,361 L180,361 Z" fill="#fff8e8" stroke="url(#gold)" stroke-width="1.8" stroke-linejoin="round"/>
+  <text x="250" y="329" fill="#38332b" font-size="23" font-weight="600">文件原生基座</text>
+  <text x="250" y="356" fill="#6f6657" font-size="13.5">纯 Markdown · JSON · JSONL —— 无向量库、无 RAG、无图数据库</text>
+  <text x="250" y="383" fill="#8a7d68" font-size="13">前台指引 · 上下文卡 · canon · 记忆 · 世界状态</text>
+
+  <!-- 基座 <-> 后台（慢循环） -->
+  <line x1="490" y1="416" x2="490" y2="462" stroke="#b09a76" stroke-width="2.2" stroke-linecap="round" marker-end="url(#ah)"/>
+  <line x1="510" y1="462" x2="510" y2="416" stroke="#b09a76" stroke-width="2.2" stroke-linecap="round" marker-end="url(#ah)"/>
+  <rect x="524" y="428" width="64" height="22" rx="11" fill="#fbf0d2" stroke="#dcbd72" stroke-width="1.1"/>
+  <text x="556" y="443" text-anchor="middle" fill="#a87d28" font-size="11.5" font-weight="700">慢循环</text>
+
+  <!-- 后台大脑 -->
+  <path d="M 828 468 c 11.201 0 16.802 0 21.08 2.18 a 20 20 0 0 1 8.74 8.74 c 2.18 4.278 2.18 9.879 2.18 21.08 L 860 594 c 0 11.201 0 16.802 -2.18 21.08 a 20 20 0 0 1 -8.74 8.74 c -4.278 2.18 -9.879 2.18 -21.08 2.18 L 172 626 c -11.201 0 -16.802 0 -21.08 -2.18 a 20 20 0 0 1 -8.74 -8.74 c -2.18 -4.278 -2.18 -9.879 -2.18 -21.08 L 140 500 c 0 -11.201 0 -16.802 2.18 -21.08 a 20 20 0 0 1 8.74 -8.74 c 4.278 -2.18 9.879 -2.18 21.08 -2.18 Z" fill="url(#cBg)" stroke="#ead6c0" stroke-width="1.5" filter="url(#cardShadow)"/>
+  <path d="M219.4,537.5 L196,551 L172.6,537.5 L172.6,510.5 L196,497 L219.4,510.5 Z" fill="url(#badge)" stroke="url(#gold)" stroke-width="1.8" filter="url(#iconShadow)"/>
+  <g stroke="url(#gold)" stroke-width="1.8" fill="#c69834">
+    <line x1="187" y1="518" x2="205" y2="518"/><line x1="187" y1="518" x2="196" y2="533"/><line x1="205" y1="518" x2="196" y2="533"/>
+    <circle cx="187" cy="518" r="4"/><circle cx="205" cy="518" r="4"/><circle cx="196" cy="533" r="4"/>
+  </g>
+  <text x="250" y="511" fill="#38332b" font-size="23" font-weight="600">后台大脑 · 常驻团队</text>
+  <text x="250" y="538" fill="#6f6657" font-size="14">慢速 · 异步 · 文件 / 搜索 / 工具</text>
+  <g font-size="13.5" text-anchor="middle">
+    <rect x="250" y="553" width="112" height="29" rx="14.5" fill="#fbf0d2" stroke="#cf9f3e" stroke-width="1.4" filter="url(#iconShadow)"/>
+    <text x="306" y="572" fill="#8a6312" font-weight="600">Showrunner</text>
+    <rect x="372" y="553" width="116" height="29" rx="14.5" fill="#fdf8ee" stroke="#ddccab" stroke-width="1.2" filter="url(#iconShadow)"/>
+    <text x="430" y="572" fill="#5f574a">World Keeper</text>
+    <rect x="498" y="553" width="84" height="29" rx="14.5" fill="#fdf8ee" stroke="#ddccab" stroke-width="1.2" filter="url(#iconShadow)"/>
+    <text x="540" y="572" fill="#5f574a">Director</text>
+    <rect x="592" y="553" width="120" height="29" rx="14.5" fill="#fdf8ee" stroke="#ddccab" stroke-width="1.2" filter="url(#iconShadow)"/>
+    <text x="652" y="572" fill="#5f574a">Card Manager</text>
+    <rect x="722" y="553" width="84" height="29" rx="14.5" fill="#fdf8ee" stroke="#ddccab" stroke-width="1.2" filter="url(#iconShadow)"/>
+    <text x="764" y="572" fill="#5f574a">Memory</text>
+  </g>
+  <text x="250" y="601" fill="#9a8e79" font-size="12" font-style="italic">单 Storykeeper 回退 · OPENOVEL_RESIDENT_TEAM=0</text>
+</svg>

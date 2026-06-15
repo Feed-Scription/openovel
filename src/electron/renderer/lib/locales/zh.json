@@ -1,0 +1,760 @@
+{
+  "app": {
+    "title": "openovel",
+    "noStoryLabel": ""
+  },
+  "header": {
+    "home": "首页",
+    "homeConfirm": "返回书库会离开当前故事，未保存的进度将从当前界面移除。确定要返回吗？",
+    "errorsBadge": "{{count}} 个错误",
+    "errorsBadge_plural": "{{count}} 个错误",
+    "sidebar": "切换侧栏",
+    "settings": "设置"
+  },
+  "footer": {
+    "idle": "空闲",
+    "placeholder": "输入一个动作，或 / 查看命令",
+    "turn": "回合 {{count}}"
+  },
+  "options": {
+    "hint": "按 {{keys}} 或点击选择 · 用铅笔可在发送前编辑"
+  },
+  "settings": {
+    "title": "设置",
+    "done": "完成",
+    "tabs": {
+      "ai": "AI",
+      "story": "故事",
+      "presentation": "呈现",
+      "system": "系统",
+      "apikeys": "API Key",
+      "providers": "供应商",
+      "routing": "模型路由",
+      "agents": "Agents",
+      "status": "服务状态",
+      "preferences": "偏好",
+      "behavior": "行为",
+      "image": "图像",
+      "music": "音乐",
+      "tts": "朗读",
+      "display": "显示",
+      "environment": "环境"
+    },
+    "mode": {
+      "label": "设置复杂度",
+      "simple": "精简",
+      "advanced": "高级",
+      "preferenceTitle": "设置复杂度",
+      "preferenceDescription": "精简只保留开始阅读所需的内容；高级则展开所有服务、模型和幕后设置。"
+    },
+    "subtabs": {
+      "ai": {
+        "models": "文本",
+        "search": "搜索",
+        "image": "图像",
+        "speech": "朗读",
+        "narrative": "叙事",
+        "maintenance": "维护",
+        "subagents": "子 Agent",
+        "residentAgents": "常驻 Agent",
+        "catalog": "目录与档位",
+        "groups": {
+          "services": "API",
+          "routing": "路由",
+          "agents": "Agent"
+        }
+      },
+      "story": {
+        "memory": "记忆",
+        "behavior": "行为"
+      },
+      "presentation": {
+        "display": "显示",
+        "storyMedia": "故事媒体"
+      },
+      "system": {
+        "preferences": "首选项",
+        "status": "状态",
+        "environment": "环境"
+      }
+    },
+    "simple": {
+      "story": {
+        "title": "默认即可",
+        "description": "故事行为和用户记忆已经有默认值，不配置也能正常开始。",
+        "body": "当你想细调叙述者的长期偏好、幕后行为、开篇方式或选项推荐时，切到高级模式。"
+      }
+    },
+    "pages": {
+      "ai": {
+        "kicker": "AI 配置",
+        "title": "模型与 AI 服务",
+        "description": "精简只配置文本模型；高级还能配置搜索、图像、朗读，并更细地决定哪个模型负责什么。"
+      },
+      "story": {
+        "kicker": "故事配置",
+        "title": "叙事行为与用户记忆",
+        "description": "设置新故事如何开始、幕后会做些什么，以及叙述者会记住的偏好。"
+      },
+      "presentation": {
+        "kicker": "呈现",
+        "title": "阅读呈现",
+        "description": "这里只处理阅读界面本身：语言、字体、字号、播放速度和背景图显示。"
+      },
+      "system": {
+        "kicker": "系统",
+        "simpleTitle": "首选项",
+        "simpleDescription": "选择设置页展示复杂度。默认保持低摩擦，需要完整控制时切到高级。",
+        "title": "运行状态与环境",
+        "description": "查看服务状态，配置工作目录、代理和运行时环境变量。"
+      }
+    },
+    "chapters": {
+      "llm": {
+        "title": "文本模型供应商",
+        "description": "选择 LLM provider，保存 API key，并设置基础端点和默认模型。"
+      },
+      "search": {
+        "title": "搜索供应商",
+        "description": "选择 Web search provider，并配置搜索 API key；它和文本模型是并列能力。"
+      },
+      "routing": {
+        "title": "模型与调用路由",
+        "description": "把每类请求——叙述、推荐选项、总结、幕后助手——分别交给你想用的 provider 和模型。"
+      },
+      "agents": {
+        "title": "Agent 能力",
+        "description": "为每个常驻 Agent 指定模型、工具权限、预算和并发限制。"
+      },
+      "modelCatalog": {
+        "title": "模型目录与默认档位",
+        "description": "添加 provider 额外暴露的模型，并按需调整 small / large / foreground / background 默认档位。"
+      },
+      "narrativeCalls": {
+        "title": "叙事调用",
+        "description": "为叙述、读者看到的选项和快速的后台助手挑选模型。"
+      },
+      "maintenanceCalls": {
+        "title": "维护调用",
+        "description": "为幕后维护挑选模型——故事打理、记忆、总结，以及读取网页。"
+      },
+      "subagentClasses": {
+        "title": "子 Agent 类别",
+        "description": "为任务可调用的助手 Agent 设置默认值：通用、连续性、研究和规划。"
+      },
+      "residentAgents": {
+        "title": "常驻 Agent",
+        "description": "为每个常驻 Agent 调整模型、工具权限、预算、temperature 和并发。"
+      },
+      "behavior": {
+        "title": "故事行为",
+        "description": "设置新故事如何开始、读者如何和故事互动，以及幕后团队如何运转。"
+      },
+      "memory": {
+        "title": "记忆与偏好",
+        "description": "查看模型维护的故事记忆，编辑你的阅读偏好，并控制是否允许跨小说记忆。"
+      },
+      "display": {
+        "title": "阅读显示",
+        "description": "配置阅读界面的语言、版面、文字播放、文本标注和视觉层。"
+      },
+      "storyMedia": {
+        "title": "故事媒体与模式",
+        "description": "控制故事是否能输出富文本、媒体、插图、场景背景和漫画模式；图像服务凭据仍在 AI → 图像 中配置。"
+      },
+      "image": {
+        "title": "故事插图",
+        "description": "设置故事如何生成自己的图片。"
+      },
+      "tts": {
+        "title": "朗读",
+        "description": "设置朗读的音色和语速。"
+      },
+      "preferences": {
+        "title": "首选项",
+        "description": "选择设置页展示复杂度。精简适合日常使用，高级提供完整控制。"
+      },
+      "status": {
+        "title": "服务状态",
+        "description": "看看现在哪些功能已连接、正常工作。"
+      },
+      "environment": {
+        "title": "环境",
+        "description": "配置工作目录、HTTP 代理和运行环境。"
+      }
+    },
+    "customEndpoint": {
+      "add": "+ 自定义端点",
+      "create": "添加",
+      "namePlaceholder": "端点名称",
+      "delete": "删除此端点",
+      "deleteConfirm": "删除这个端点及其已保存的 key？"
+    },
+    "tts": {
+      "loading": "加载中…",
+      "providerVolcano": "火山引擎（豆包）",
+      "customEndpoint": "OpenAI 兼容语音端点",
+      "customBaseUrl": "Base URL",
+      "customModel": "模型",
+      "customVoice": "音色",
+      "customSampleRate": "PCM 采样率",
+      "customHint": "逐句 POST {baseUrl}/audio/speech（response_format=pcm）。逐句同步朗读保持可用。",
+      "enable": {
+        "label": "朗读故事（豆包 / 火山引擎）",
+        "description": "在故事写出来的同时朗读它，文字随声音逐句出现。"
+      },
+      "credentials": "火山引擎登录",
+      "voice": "音色",
+      "voiceHint": "填写你在火山控制台开通的音色（大模型音色通常以 _bigtts 结尾）。",
+      "speed": "语速"
+    },
+    "apikeys": {
+      "llm": "LLM",
+      "pickHint": "上方选一个 provider，再设置 API key 并自动测试。",
+      "save": "保存",
+      "show": "显示",
+      "hide": "隐藏",
+      "clear": "清除",
+      "testing": "测试连接中…",
+      "testConnection": "测试连接",
+      "shadowTitle": "被其它配置文件覆盖",
+      "shadowHint": "以下取值来自更高优先级的配置层，会覆盖本页的设置。请编辑或移除：",
+      "testOk": "✓ {{provider}}/{{model}} · {{latency}}ms",
+      "modelDetails": "模型详情",
+      "alias": "别名（显示名）",
+      "webSearch": "网络搜索",
+      "custom": {
+        "title": "自定义 Provider",
+        "intro": "可添加任意数量的 OpenAI 兼容或 Anthropic 格式端点。每个都可在「模型路由」和「Agents」中按调用单独分配，也可在此设为默认。",
+        "add": "+ 添加自定义 Provider",
+        "newTitle": "新建自定义 Provider",
+        "name": "名称",
+        "alias": "别名（provider id）",
+        "aliasPlaceholder": "fast-proxy",
+        "aliasHint": "留空则根据名称自动生成",
+        "aliasRenameHint": "将改名为",
+        "kind": "协议",
+        "kindOpenai": "OpenAI 兼容",
+        "kindAnthropic": "Anthropic Messages",
+        "apiKey": "API key",
+        "smallModel": "默认模型",
+        "largeModel": "后台模型",
+        "thinking": "思考 (thinking)",
+        "thinkingHint": "跟随调用（默认）",
+        "thinkingOff": "始终关闭",
+        "thinkingOn": "始终开启",
+        "thinkingAuto": "透传（端点默认）",
+        "thinkingHelp": "跟随调用：narration 快速不思考、agent 思考，发送 { thinking: { type } }（同 Kimi/MiMo）。仅当端点对该字段报 400 时才用「透传」。",
+        "reasoningEffort": "推理强度",
+        "reasoningDefault": "（默认）",
+        "save": "保存",
+        "cancel": "取消",
+        "delete": "删除",
+        "confirmDelete": "确认删除？",
+        "keySet": "已设 key",
+        "keyNotSet": "未设 key"
+      }
+    },
+    "routing": {
+      "kicker": "模型路由",
+      "title": "按调用分配模型",
+      "description": "普通配置留在供应商页；这里只处理高级路由。选择 provider、模型或参数后会自动保存，并在下一次模型请求生效。",
+      "overview": "模型路由概览",
+      "applies": "下一次调用生效",
+      "providerCount": "供应商",
+      "customRoutes": "自定义路由",
+      "customModels": "自定义模型",
+      "search": "搜索调用、模型或 provider",
+      "groups": {
+        "base": "默认档位",
+        "narrative": "叙事调用",
+        "maintenance": "维护调用",
+        "subagents": "Subagent 类别",
+        "other": "其它调用"
+      },
+      "catalogTitle": "模型目录",
+      "catalogDescription": "{{builtin}} 个内置默认模型已可用；这里只添加 provider 额外暴露的模型。",
+      "catalogCount": "{{count}} 个自定义",
+      "provider": "Provider",
+      "model": "模型",
+      "label": "标签",
+      "role": "运行通道",
+      "temperature": "Temperature",
+      "maxTokens": "最大 tokens",
+      "timeoutMs": "超时 ms",
+      "chunkTimeoutMs": "分片超时 ms",
+      "advancedParameters": "高级参数",
+      "advancedParametersHint": "运行通道、采样和超时设置默认隐藏；需要精调时再展开。",
+      "defaultParameters": "默认参数",
+      "defaultValue": "默认",
+      "chooseProvider": "选择 provider",
+      "modelPlaceholder": "model id",
+      "labelPlaceholder": "可选",
+      "addModel": "添加",
+      "removeModel": "移除 {{model}}",
+      "noCustomModels": "没有自定义模型。内置默认模型已经在路由选择中可用。",
+      "providerDefault": "provider 默认",
+      "useDefaultProvider": "默认（{{provider}}）",
+      "useProviderDefault": "默认（{{model}}）",
+      "foreground": "前台通道",
+      "background": "后台通道",
+      "custom": "custom",
+      "saving": "保存中",
+      "reset": "重置",
+      "loading": "加载模型路由中…",
+      "noMatches": "这一组里没有匹配的调用。",
+      "loadError": "加载模型路由失败：{{error}}",
+      "savingRoute": "保存路由中…",
+      "savedRoute": "已保存，下一次调用生效",
+      "savingModel": "保存模型中…",
+      "savedModel": "模型已保存",
+      "removingModel": "移除模型中…",
+      "removedModel": "模型已移除",
+      "saveFailed": "保存失败：{{error}}",
+      "removeFailed": "移除失败：{{error}}"
+    },
+    "agents": {
+      "kicker": "Agent 配置",
+      "title": "按 Agent 分配能力",
+      "description": "每个常驻 Agent 都可以绑定自己的模型、工具权限和工作预算。默认只显示当前生效值，需要精调时再展开。",
+      "overview": "Agent 配置概览",
+      "applies": "下次唤醒生效",
+      "agentCount": "Agents",
+      "customAgents": "自定义 Agent",
+      "toolCount": "可用工具",
+      "custom": "custom",
+      "defaultModel": "默认模型",
+      "defaultProvider": "默认 provider",
+      "toolsSelected": "{{selected}} / {{total}} 工具",
+      "budgetSummary": "{{steps}} 步 · {{tokens}} tokens",
+      "maxSteps": "最大步数",
+      "maxTokens": "最大 tokens",
+      "temperature": "temperature",
+      "toolConcurrency": "工具并发",
+      "toolAccess": "工具权限",
+      "advancedModel": "高级模型设置",
+      "advancedModelHint": "运行通道通常自动决定，只有需要改变前台/后台默认链时再调整。",
+      "savingShort": "保存中",
+      "resetAction": "重置",
+      "loading": "加载 Agents 中…",
+      "loadError": "加载 Agents 失败：{{error}}",
+      "saving": "保存 {{agent}} 中…",
+      "saved": "已保存，下次 Agent 运行生效",
+      "resetting": "重置 {{agent}} 中…",
+      "reset": "Agent 已重置",
+      "saveFailed": "保存失败：{{error}}",
+      "resetFailed": "重置失败：{{error}}"
+    },
+    "image": {
+      "intro": "配置图像生成，让故事能自己画图。即使不配置，它也能在网上找图；要生成新图则需要 provider、API key 和模型。",
+      "baseUrl": "Base URL",
+      "apiKey": "API key",
+      "model": "模型",
+      "path": "生成路径",
+      "size": "默认尺寸",
+      "test": "测试生成",
+      "testing": "测试中…",
+      "configured": "已配置生成",
+      "notConfigured": "需要 Base URL + API key + 模型",
+      "costWarning": "警告：测试会发送一次真实的图像生成请求，可能消耗 provider 的付费额度。",
+      "costConfirm": "现在运行真实图像生成测试吗？这次请求可能产生费用。",
+      "testOk": "图像生成可用",
+      "testFailed": "图像生成失败",
+      "previewAlt": "图像生成测试预览"
+    },
+    "music": {
+      "intro": "连接网易云音乐，让故事能播放贴合场景的音乐。你需要一个网易开放平台的开发者应用——在下面填好它的信息并登录，然后到「行为」里打开背景音乐。",
+      "appId": "App ID",
+      "appIdPlaceholder": "来自你的网易应用",
+      "appSecret": "App 密钥",
+      "saved": "已保存",
+      "leaveBlank": "留空则沿用已保存的",
+      "server": "服务器地址（选填）",
+      "device": "设备信息（高级）",
+      "deviceHint": "大多数情况留空即可——只有当你的网易应用需要特定设备信息时才填。",
+      "save": "保存",
+      "signedIn": "已登录",
+      "notSignedIn": "尚未登录",
+      "scanToSignIn": "扫码登录",
+      "signOut": "退出登录",
+      "accessToken": "访问令牌",
+      "accessTokenPlaceholder": "粘贴访问令牌即可登录",
+      "signIn": "登录",
+      "test": "测试连接",
+      "testing": "测试中…",
+      "notConnected": "连接失败",
+      "connected": "已连接。",
+      "ready": "已连接——可以播放音乐了。",
+      "needMembership": "已连接，但这首歌无法播放——账号可能需要会员。",
+      "signInToPlay": "已连接。登录后即可播放音乐。",
+      "saveFailed": "保存失败",
+      "qr": {
+        "loading": "生成中…",
+        "scan": "用网易云音乐 App 扫一扫",
+        "confirm": "请在手机上确认",
+        "expired": "二维码已过期，请重试",
+        "failed": "无法开始"
+      }
+    },
+    "display": {
+      "groups": {
+        "interface": "界面与版面",
+        "readingFlow": "阅读流",
+        "textMarks": "文本标注",
+        "visualLayers": "视觉层"
+      },
+      "colorTheme": "配色方案",
+      "fontFamily": "正文字体",
+      "fontSize": "字号：{{size}}px",
+      "narrationSpeed": "阅读速度：{{cpm}} 字/分",
+      "narrationSpeedUnlimited": "阅读速度：不限速",
+      "narrationSpeedHint": "文字在阅读时出现的快慢，立即生效。",
+      "autoScrollOff": "故事生成时不自动滚动",
+      "backgroundArt": "当场景有封面图时显示背景图",
+      "sceneBackdrop": "在故事后方显示场景背景图",
+      "customRichBlocks": "让故事卡片使用自己的样式",
+      "language": "界面语言",
+      "langEn": "English",
+      "langZh": "简体中文",
+      "highlightDialogue": "对话引文着色",
+      "highlightNames": "高亮角色人名",
+      "layoutScale": "版面宽度：{{pct}}%",
+      "layoutScaleHint": "按比例加宽阅读区和书库封面，适合大屏幕。"
+    },
+    "preferences": {
+      "label": "阅读偏好",
+      "hint": "这是 narrator 在塑造声音和风格时读的内容。直接编辑即可——markdown 格式，每行一条事实就好。",
+      "hintEmpty": " （为空 —— 第一次保存会创建文件。）",
+      "form": "表单",
+      "markdown": "Markdown",
+      "save": "保存",
+      "revert": "撤销",
+      "reset": "重置",
+      "confirmReset": "重置阅读偏好？这会清空全局 USER.md，且无法撤销。"
+    },
+    "memory": {
+      "loading": "加载记忆中…",
+      "loadError": "加载记忆失败：{{error}}",
+      "viewerTitle": "模型记忆",
+      "viewerHintSimple": "当前小说记忆只作用于这本小说；跨小说记忆可在上方关闭。",
+      "viewerHintAdvanced": "查看模型会读取或维护的记忆文件。",
+      "reset": "重置",
+      "resetCrossStory": "重置跨小说",
+      "resetting": "重置中…",
+      "resetDone": "已重置",
+      "resetFailed": "重置失败：{{error}}",
+      "saveFailed": "保存失败：{{error}}",
+      "confirmReset": "重置「{{target}}」？此操作无法撤销。",
+      "crossStoryDisabled": "跨小说记忆已关闭。这里仍可查看已有内容，但它不会注入模型上下文，也不会继续更新。",
+      "crossStory": {
+        "label": "跨小说 Memory",
+        "on": "开启",
+        "off": "关闭",
+        "description": "开启时，模型观察到的读者习惯和可复用资料会跨小说保留。关闭后，模型记忆只保留在当前小说内。"
+      },
+      "targets": {
+        "story": {
+          "label": "当前小说 Memory",
+          "empty": "# Story Memory\n\n（当前小说还没有长期记忆。）"
+        },
+        "user": {
+          "label": "阅读偏好",
+          "empty": "# User Memory\n\n（还没有保存阅读偏好。）"
+        },
+        "observed": {
+          "label": "跨小说观察",
+          "empty": "# Observed Memory\n\n（还没有模型观察记忆。）"
+        },
+        "references": {
+          "label": "共享资料",
+          "empty": "# Shared References\n\n（还没有共享资料。）"
+        },
+        "crossStory": {
+          "label": "跨小说 Memory"
+        }
+      }
+    },
+    "behavior": {
+      "loadError": "加载行为设置失败：{{error}}",
+      "loading": "加载中…",
+      "applies": {
+        "nextTurn": "下一回合生效",
+        "nextSession": "下次启动生效"
+      },
+      "sourcedFrom": "来源：{{source}}",
+      "groups": {
+        "storyStart": {
+          "title": "开篇与初始化",
+          "description": "这些开关决定新故事开头前要准备到什么程度，以及是否先试听叙述声音。"
+        },
+        "interaction": {
+          "title": "读者互动",
+          "description": "控制每回合结束后读者能否直接点选推荐行动。"
+        },
+        "engine": {
+          "title": "幕后故事团队",
+          "description": "控制谁在后台维护世界、人物、节奏和文件，以及他们能用哪些本地工具。"
+        },
+        "diagnostics": {
+          "title": "测试与记录",
+          "description": "用于调试、对照实验和记录模型调用；日常阅读通常不需要改。"
+        },
+        "richStory": {
+          "title": "富文本与故事素材",
+          "description": "控制故事能否输出结构化内容卡片，以及能否引用故事媒体文件夹里的素材。"
+        },
+        "storyMedia": {
+          "title": "插图、背景与漫画",
+          "description": "控制故事是否能把画面、场景背景和漫画模式作为叙事的一部分。"
+        }
+      },
+      "toggles": {
+        "optionsEnabled": {
+          "label": "每回合给出选项",
+          "description": "每回合结束后给出几个带编号的选项，点选即可，不必每次都自己打字。"
+        },
+        "displayPacing": {
+          "label": "按阅读节奏显示文字",
+          "description": "让文字以平稳的节奏出现。关闭后会在生成的同时立刻全部显示。"
+        },
+        "residentTeam": {
+          "label": "故事小组",
+          "description": "幕后有一支小团队帮你打理世界、节奏、人物和记忆。默认开启——关闭后改用单个更轻量的助手。"
+        },
+        "crossStoryMemory": {
+          "label": "跨小说 Memory",
+          "description": "允许 openovel 把模型观察到的读者习惯和可复用资料带到其它小说。关闭后，模型记忆只保留在当前小说内；已有跨小说记忆需要手动重置。"
+        },
+        "formatContract": {
+          "label": "富文本渲染",
+          "description": "让故事在合适的时候不只显示纯文字，还能显示状态栏、属性面板和终端风格的小块。"
+        },
+        "storyIncludes": {
+          "label": "故事里的媒体",
+          "description": "让故事显示你放进它媒体文件夹里的图片、视频、音频或文字。需先开启富文本渲染。"
+        },
+        "imageGen": {
+          "label": "故事插图",
+          "description": "让故事随剧情推进显示它找到或生成的图片。会一并开启富文本渲染和媒体——请在「设置 → 图像」里配置。"
+        },
+        "imageBackground": {
+          "label": "场景背景",
+          "description": "让准备好的场景图作为柔和、压暗的背景衬在正文后面，增添氛围。应用内置遮罩，保证文字始终清晰可读。会一并开启富文本渲染和媒体；与「故事插图」搭配最佳。"
+        },
+        "characterSheets": {
+          "label": "角色设定图（实验性）",
+          "description": "让图像助手依据角色卡为主要角色维护视觉参考：一份文字外观设定加一张生成的角色设定图，之后每张插图都以此对齐角色形象。需先开启「故事插图」。"
+        },
+        "comicMode": {
+          "label": "漫画模式（实验性）",
+          "description": "在故事库卡片菜单里加一个按故事切换的开关：开启后该故事以连环画（生成的分格图配文字）而非小说形式展开。请先在「设置 → 图像」配置图像生成。",
+          "menuOn": "切换为漫画模式",
+          "menuOff": "改回小说模式",
+          "needsImageProvider": "漫画模式每回合都要生成图片。请先在「设置 → 图像」配置图像生成。"
+        },
+        "fastMode": {
+          "label": "快速模式（实验性）",
+          "description": "在故事库卡片菜单里加一个按故事切换的开关：开启后该故事以短促段落快速推进剧情，每回合停在下一个有意义的决策点上，由选项承担玩法重量。",
+          "menuOn": "切换为快速模式",
+          "menuOff": "改回常规节奏"
+        },
+        "musicGen": {
+          "label": "背景音乐（实验性）",
+          "description": "为故事播放贴合气氛的音乐。窗口顶部会有一个小条，可以暂停和调音量。请先在「设置 → 音乐」里连接你的音乐账号。"
+        },
+        "initNarratorPreview": {
+          "label": "建故事时先听听文风",
+          "description": "开新故事时，先在草稿上听听叙述者的声音，开篇前打磨一两轮。开头会多花一点点时间。"
+        },
+        "bashTool": {
+          "label": "故事团队的命令行工具（高级）",
+          "description": "允许幕后团队运行命令行（如 jq）来读取和更新世界数据。运行在操作系统沙箱中：无法访问网络，且只能写入本故事的文件。默认关闭；需要 macOS，或装有 bubblewrap 的 Linux。"
+        },
+        "disableBackground": {
+          "label": "暂停所有后台工作（测试用）",
+          "description": "停掉每回合之间幕后进行的一切。用于测试和对照。"
+        },
+        "disableStorykeeper": {
+          "label": "暂停故事打理（测试用）",
+          "description": "停掉幕后那个记录设定和人物的助手。"
+        },
+        "disableMemoryReview": {
+          "label": "暂停记忆更新（测试用）",
+          "description": "停掉幕后那个积累长期记忆的助手。"
+        },
+        "disableContextInserts": {
+          "label": "暂停自动上下文卡（测试用）",
+          "description": "不再每回合自动带入最相关的人物和世界设定。"
+        },
+        "recordCalls": {
+          "label": "记录原始模型调用（开发者）",
+          "description": "把每次模型调用（发送的完整提示词和完整回复）保存到 story/packets/calls.jsonl，用于构建训练数据。默认关闭；会产生较大文件。"
+        }
+      }
+    }
+  },
+  "onboarding": {
+    "title": "欢迎使用 openovel",
+    "subtitle": {
+      "apiKey": "连接你的 LLM",
+      "language": "默认语言",
+      "styleSample": "笔触参考（可选）",
+      "styleTags": "风格偏好（可选）"
+    },
+    "step": "第 {{current}} / {{total}} 步",
+    "apiKeyLead": "选一个 provider 并粘贴 key。以后可在齿轮图标里修改。",
+    "stylePlaceholder": "你喜欢的一段文字、一本书、一个作者或一类作品 —— 也可以留空。",
+    "languageOptions": {
+      "english": "English",
+      "englishHint": "默认",
+      "simplifiedChinese": "简体中文",
+      "simplifiedChineseHint": "简体中文",
+      "other": "其它 / 混合…",
+      "otherHint": "自己输入",
+      "otherPlaceholder": "例如：日本語 / Español / 主要英文偶尔日文"
+    },
+    "skip": "跳过设置",
+    "back": "← 上一步",
+    "continue": "继续 →",
+    "finish": "完成设置 →"
+  },
+  "preferenceForm": {
+    "language": "默认故事语言",
+    "proseReference": "笔触参考（可选）",
+    "proseReferencePlaceholder": "你喜欢的一段文字、一本书、一个作者，或一类作品 —— 让叙述者借鉴它的声音。",
+    "styleTags": "风格偏好"
+  },
+  "initChat": {
+    "initializing": "初始化",
+    "greeting": "「{{storyName}}」想做成一个什么样的故事？写几句话就行，或者直接贴一整本世界书，我会按你的描述起草设定和人物。",
+    "resumedInterrupted": "上次初始化被意外中断，正在从中断处自动继续……",
+    "resumeUnfinished": "这个故事的初始化尚未完成。已恢复之前的进度；输入框里预填了原始请求，发送即可在已有草稿的基础上继续。",
+    "agentAsks": "Agent 提问",
+    "draftReady": "草稿已就绪",
+    "completed": "已完成",
+    "errorsFolded": "{{count}} 个错误",
+    "errorsFolded_plural": "{{count}} 个错误",
+    "agentTree": {
+      "runningTool": "{{count}} 个工具",
+      "runningTools": "{{count}} 个工具",
+      "needsAttention": "需要处理",
+      "thinking": "思考中...",
+      "done": "完成"
+    },
+    "status": {
+      "drafting": "Agent 正在起草你的故事…",
+      "revising": "Agent 正在按你的反馈修订…"
+    },
+    "placeholder": {
+      "initial": "描述你想要的故事，或粘贴一份世界书",
+      "running": "随时补充或修订",
+      "revision": "想再调整一下？"
+    },
+    "send": "发送",
+    "sendFeedback": "发送",
+    "sendRevision": "发送修订",
+    "cancel": "取消",
+    "backToLibrary": "回到主页",
+    "replayBadge": "演示 · 回放",
+    "replayAgain": "重新回放",
+    "replayDone": "完成",
+    "enterInteractive": "进入互动模式 →",
+    "enterInteractiveHint": "锁定当前草稿，开始阅读",
+    "askPlaceholder": "在这里写答案 —— Cmd-Enter 发送",
+    "askMultiHint": "可多选，选好后点「确认」。",
+    "askMultiPlaceholder": "还想补充什么写在这里（可选），然后确认 —— Cmd-Enter",
+    "answer": "回答"
+  },
+  "share": {
+    "copy": "复制为图片",
+    "save": "保存为图片",
+    "copied": "已复制到剪贴板",
+    "saved": "图片已保存",
+    "failed": "图片生成失败"
+  },
+  "storyNaming": {
+    "title": "给你的新故事取个名字",
+    "hint": "随便写——中英文、数字、空格、冒号、emoji 都可以。",
+    "placeholder": "我的新故事",
+    "back": "返回书库",
+    "prefsLabel": "故事偏好",
+    "useDefaults": "沿用默认偏好",
+    "useDefaultsHint": "跟随全局偏好",
+    "customize": "为本故事定制",
+    "customizeHint": "只覆盖这一本",
+    "create": "创建故事"
+  },
+  "initDepth": {
+    "title": "选择初始化深度",
+    "subtitle": "只需选一次，之后可在 Settings 修改。",
+    "hint": "悬停查看详情",
+    "zero": {
+      "title": "零初始化",
+      "short": "用你的简述当开篇背景，不跑 Agent。",
+      "body": "起步最快，零 LLM 成本。叙述器在第一个读者动作上接管，从那里即兴展开。"
+    },
+    "standard": {
+      "title": "标准初始化",
+      "short": "Agent 用文件工具搭脚手架。",
+      "body": "Init Agent 根据你的简述搭建前台指引、分节文件、最多 5 张角色卡、长期记忆。不联网。"
+    },
+    "deep": {
+      "title": "深度初始化",
+      "short": "Agent 先做网络调研，再开始搭建。",
+      "body": "适合二创或基于现实世界的故事。Agent 在写之前会上网搜原作世界观、人物画像、关系，并把出处记入长期记忆和角色卡。耗时较长（1–3 分钟）。"
+    },
+    "settingLabel": "初始化深度",
+    "settingHint": "未设置时，新建故事会弹窗询问。在这里直接选会跳过弹窗。",
+    "unsetLabel": "每次新建故事都问"
+  },
+  "stories": {
+    "title": "你的故事库",
+    "hint": "←→↑↓ 导航 · Enter 打开 · 双击打开",
+    "newStory": "新建故事",
+    "import": "导入…",
+    "searchPlaceholder": "搜索故事…",
+    "sort": {
+      "label": "排序方式",
+      "recent": "最近",
+      "name": "名称",
+      "size": "大小"
+    },
+    "menu": {
+      "rename": "重命名故事",
+      "replayInit": "回放初始化",
+      "resumeInit": "继续初始化",
+      "resumeInitFailed": "无法继续初始化",
+      "exportEpub": "导出为 EPUB 电子书…",
+      "exportTxt": "导出为 TXT 文本…",
+      "exportCurrent": "导出当前进度…",
+      "exportInitial": "导出初始版本…",
+      "exportInitialMissing": "该故事没有保存初始版本（导入的，或在此功能之前创建）。",
+      "exportInitialMissingTag": "无初始版本",
+      "restart": "重新开始",
+      "restartConfirm": "确认重新开始",
+      "restartHint": "当前进度会存为历史版本",
+      "restartMissing": "没有可回退的开局版本",
+      "restartMissingTag": "无开局",
+      "restartFailed": "无法重新开始",
+      "versions": "历史版本",
+      "versionsLoading": "载入中…",
+      "versionsEmpty": "暂无存档版本",
+      "versionLabel": "第 {{n}} 回合",
+      "restoreVersion": "切回此版本",
+      "restoreFailed": "无法切换版本",
+      "delete": "删除故事",
+      "deleteActive": "删除故事",
+      "confirmDelete": "确认删除 —— 不可撤销"
+    }
+  },
+  "common": {
+    "cancel": "取消",
+    "ok": "好",
+    "saving": "保存中…",
+    "saved": "已保存"
+  },
+  "comic": {
+    "drawing": "正在作画…",
+    "panelFailed": "本格未能成图"
+  }
+}

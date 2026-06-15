@@ -1,0 +1,76 @@
+{
+  "name": "openovel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first AI interactive fiction runtime with a fast narrator loop and asynchronous storykeeper agents.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Feed-Scription/openovel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Feed-Scription/openovel/issues"
+  },
+  "homepage": "https://github.com/Feed-Scription/openovel#readme",
+  "keywords": [
+    "interactive-fiction",
+    "ai",
+    "agent",
+    "electron",
+    "local-first"
+  ],
+  "type": "module",
+  "main": "src/electron/main.js",
+  "scripts": {
+    "build:electron": "node scripts/build-electron.mjs",
+    "electron": "npm run build:electron && node scripts/patch-electron-dev-icon.mjs && electron .",
+    "electron:dev": "OPENOVEL_ELECTRON_DEVTOOLS=1 npm run build:electron && node scripts/patch-electron-dev-icon.mjs && electron .",
+    "dist": "npm run build:electron && electron-builder",
+    "dist:mac": "npm run build:electron && electron-builder --mac",
+    "dist:mac:portable": "node scripts/mac-portable.mjs arm64",
+    "dist:mac:portable:x64": "node scripts/mac-portable.mjs x64",
+    "dist:mac:portable:universal": "node scripts/mac-portable.mjs universal",
+    "dist:win": "npm run build:electron && electron-builder --win",
+    "dist:linux": "npm run build:electron && electron-builder --linux",
+    "start": "npm run electron",
+    "config:doctor": "node src/config/doctor.js",
+    "provider:doctor": "node src/provider/doctor.js",
+    "eval:smoke": "node src/eval/storySmoke.js",
+    "eval:model-player": "node src/eval/modelPlayer.js",
+    "eval:judge": "node src/eval/storyJudge.js",
+    "eval:codex-packet": "node src/eval/codexReviewPacket.js",
+    "eval:ablation": "node src/eval/ablationSuite.js",
+    "eval:probe": "node src/eval/worldConsistencyProbe.js",
+    "eval:probe-worker": "node src/eval/probeWorker.js",
+    "eval:tms:prepare": "node src/eval/tellMeAStoryAdapter.js prepare",
+    "eval:tms": "node src/eval/tellMeAStoryAdapter.js run",
+    "test": "OPENOVEL_RESIDENT_TEAM=0 node --test --test-force-exit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@codemirror/lang-markdown": "^6.5.0",
+    "@uiw/react-codemirror": "^4.25.10",
+    "@zumer/snapdom": "^2.12.1",
+    "hast-util-from-html": "^2.0.3",
+    "hast-util-sanitize": "^5.0.2",
+    "i18next": "^26.3.0",
+    "i18next-browser-languagedetector": "^8.2.1",
+    "jszip": "^3.10.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^17.0.8",
+    "react-markdown": "^10.1.0",
+    "react-window": "^2.2.7",
+    "remark-gfm": "^4.0.1",
+    "streamdown": "^2.5.0",
+    "undici": "^7.25.0",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "electron": "^42.2.0",
+    "electron-builder": "^26.8.1",
+    "esbuild": "^0.28.0"
+  }
+}

@@ -1,0 +1,23 @@
+# Director — owns plot tension and difficulty/pacing nodes. Reads worldkeeper/ +
+# context-cards/ to plan tension against the real world state and characters;
+# proposes changes to the Showrunner via messages (it does not write the frontend).
+id: director
+kind: drama-maintenance-agent
+role: subagent
+modelProfile: storykeeper
+maxSteps: 30
+maxTokens: 10000
+temperature: 0.4
+toolConcurrency: 4
+domain: director
+tools: [read, edit, write, grep, glob, explain, bash]
+# bash (jq etc.) for crunching its own data (ngrams.json, ARC/QUALITY notes).
+# includeDangerous lets the dangerous-gated bash tool through when the operator
+# has enabled it (OPENOVEL_ENABLE_BASH_TOOL); bash itself stays OS-sandboxed.
+includeDangerous: true
+writeScope:
+  - story/director/**
+readScope:
+  - story/**
+prompt: directorContract
+enabledWhen: always

@@ -1,0 +1,18 @@
+# Memory — the durable-memory agent (MEMORY.md + topics). Resident so it can also
+# message the foreground when something it learned should reach the narrator.
+id: memory
+kind: memory-review-agent
+role: subagent
+modelProfile: memory
+maxSteps: 20
+maxTokens: 8000
+temperature: 0.3
+toolConcurrency: 2
+domain: memory
+tools: [read, edit, write, grep, glob, explain]
+writeScope:
+  - story/memory/**
+readScope:
+  - story/**
+prompt: memoryContract
+enabledWhen: always

@@ -1,0 +1,31 @@
+.DS_Store
+node_modules/
+coverage/
+dist/
+dist-electron/
+dist-web/
+*.log
+
+.env
+.env.*
+!.env.example
+
+# AI coding-assistant guidance — local dev aids, not for the public repo
+.claude/
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.cursor/
+.cursorrules
+.windsurfrules
+.clinerules
+.github/copilot-instructions.md
+
+.openovel/
+.ai-story/
+story/
+data/
+
+# heap snapshots written by --heapsnapshot-near-heap-limit and
+# OPENOVEL_AUTO_HEAP_SNAPSHOT — research artifacts, can be GB-scale
+*.heapsnapshot

@@ -1,0 +1,25 @@
+# World Keeper — maintains world logic/state from the narrative and simulates
+# future developments. Reads context-cards for entity facts; carries web tools to
+# ground the world in real information (compressed into its own domain, never raw
+# to the narrator).
+id: worldkeeper
+kind: world-maintenance-agent
+role: subagent
+modelProfile: storykeeper
+maxSteps: 40
+maxTokens: 12000
+temperature: 0.35
+toolConcurrency: 4
+domain: worldkeeper
+tools: [read, edit, write, grep, glob, explain, bash, websearch, webfetch]
+# bash (jq etc.) for querying + deterministically patching its JSON state.
+# includeDangerous lets the dangerous-gated bash tool through when the operator
+# has enabled it (OPENOVEL_ENABLE_BASH_TOOL); bash itself stays OS-sandboxed.
+includeDangerous: true
+writeScope:
+  - story/worldkeeper/**
+  - story/state/**
+readScope:
+  - story/**
+prompt: worldKeeperContract
+enabledWhen: always
