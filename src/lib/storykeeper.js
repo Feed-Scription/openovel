@@ -10,9 +10,13 @@ import { isResidentTeamEnabled, buildShowrunnerAgent } from "../runtime/resident
 // frontend from their domains.
 export async function runStorykeeper({ turnId, action, foreground, backgroundSignal }) {
   const runtime = new BackgroundAgentRuntime({ registry: toolRegistry, bus, role: "background" })
+  // includeDangerous: true so the standalone Storykeeper gets the (OS-sandboxed)
+  // bash tool too — in single mode it owns the whole story, so the same jq/grep
+  // data-wrangling the resident sub-agents use should be available here. In team
+  // mode the sub-agents carry bash; the Showrunner is built separately.
   const agent = isResidentTeamEnabled()
-    ? (await buildShowrunnerAgent()) || createStorykeeperAgent()
-    : createStorykeeperAgent()
+    ? (await buildShowrunnerAgent()) || createStorykeeperAgent({ includeDangerous: true })
+    : createStorykeeperAgent({ includeDangerous: true })
   return runtime.run({
     agent,
     input: { turnId, action, foreground, backgroundSignal },

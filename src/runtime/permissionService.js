@@ -3,7 +3,7 @@ import { appendJsonl, ensureDir, readText } from "../lib/files.js"
 import { backgroundJobs } from "./backgroundJob.js"
 import { paths } from "../lib/storyStore.js"
 import { workspaceLayout } from "../lib/workspacePaths.js"
-import { PermissionDeniedError } from "./permissionPolicy.js"
+import { PermissionDeniedError, isBashToolEnabled } from "./permissionPolicy.js"
 
 export class PermissionRequiredError extends Error {
   constructor(request) {
@@ -167,8 +167,8 @@ export function classifyPermissionRisk({ tool, input = {}, decision = {}, cwd = 
 function classifyBash(command, env) {
   const text = String(command || "").trim()
   if (!text) return { action: "deny", level: "invalid", reason: "Empty bash command." }
-  if (!isTruthy(env.OPENOVEL_ENABLE_BASH_TOOL)) {
-    return { action: "deny", level: "disabled", reason: "Bash is disabled by default. Set OPENOVEL_ENABLE_BASH_TOOL=true to expose it." }
+  if (!isBashToolEnabled(env)) {
+    return { action: "deny", level: "disabled", reason: "Bash was disabled by configuration (OPENOVEL_ENABLE_BASH_TOOL=false)." }
   }
   // Only obviously-catastrophic system commands are refused outright. Everything
   // else runs inside the OS sandbox (no network; writes limited to the
@@ -292,8 +292,4 @@ function stableStringify(value) {
   if (!value || typeof value !== "object") return JSON.stringify(value)
   if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`
   return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`).join(",")}}`
-}
-
-function isTruthy(value) {
-  return ["1", "true", "yes", "on"].includes(String(value || "").toLowerCase())
 }

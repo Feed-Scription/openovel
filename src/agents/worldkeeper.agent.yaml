@@ -13,8 +13,8 @@ toolConcurrency: 4
 domain: worldkeeper
 tools: [read, edit, write, grep, glob, explain, bash, websearch, webfetch]
 # bash (jq etc.) for querying + deterministically patching its JSON state.
-# includeDangerous lets the dangerous-gated bash tool through when the operator
-# has enabled it (OPENOVEL_ENABLE_BASH_TOOL); bash itself stays OS-sandboxed.
+# includeDangerous lets the dangerous-gated bash tool through. bash is ON by
+# default (OS-sandboxed); operators can disable it with OPENOVEL_ENABLE_BASH_TOOL=false.
 includeDangerous: true
 writeScope:
   - story/worldkeeper/**

@@ -45,6 +45,10 @@ export function createStorykeeperAgent(opts = {}) {
     temperature: opts.temperature ?? 0.35,
     toolConcurrency: opts.toolConcurrency || 4,
     includeTools: opts.includeTools,
+    // Forwarded so the standalone single Storykeeper can opt into the
+    // dangerous-gated bash tool (the resident sub-agents declare this in their
+    // Agent Cards; the coordinator/Showrunner leaves it unset → no bash).
+    includeDangerous: opts.includeDangerous,
     threadPath,
     threadSource: id,
 

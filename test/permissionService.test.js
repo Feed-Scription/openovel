@@ -114,7 +114,7 @@ test("PermissionService still supports an explicit ask rule via the permission l
   }
 })
 
-test("PermissionService gates bash on enablement, allows ordinary commands (sandboxed), refuses only catastrophic", async () => {
+test("PermissionService: bash on by default, off when explicitly disabled; allows sandboxed commands, refuses only catastrophic", async () => {
   const env = await isolatedEnv()
   try {
     const registry = new ToolRegistry()
@@ -127,8 +127,7 @@ test("PermissionService gates bash on enablement, allows ordinary commands (sand
       },
     })
 
-    await assert.rejects(() => registry.execute("bash", { command: "date" }), /Bash is disabled/)
-    process.env.OPENOVEL_ENABLE_BASH_TOOL = "true"
+    // On by default (isolatedEnv leaves OPENOVEL_ENABLE_BASH_TOOL unset).
     assert.equal((await registry.execute("bash", { command: "date" })).output, "ok")
     // Ordinary mutating commands run (the OS sandbox confines them to the
     // workspace), no approval prompt.
@@ -137,6 +136,9 @@ test("PermissionService gates bash on enablement, allows ordinary commands (sand
     // Only obviously-catastrophic system commands are refused outright.
     await assert.rejects(() => registry.execute("bash", { command: "rm -rf /" }), /Catastrophic shell command/)
     await assert.rejects(() => registry.execute("bash", { command: "mkfs.ext4 /dev/sda" }), /Catastrophic shell command/)
+    // Explicit opt-out disables it.
+    process.env.OPENOVEL_ENABLE_BASH_TOOL = "false"
+    await assert.rejects(() => registry.execute("bash", { command: "date" }), /disabled by configuration/)
   } finally {
     env.restore()
   }

@@ -1,5 +1,15 @@
 import { settingsEnv } from "../config/settings.js"
 
+// Bash tool gating. Default ON: bash is a standard background tool, OS-sandboxed
+// (no network; writes confined to the workspace). It is suppressed only when an
+// operator explicitly disables it (OPENOVEL_ENABLE_BASH_TOOL=0/false/off/no).
+// Mirrors isResidentTeamEnabled's default-on shape so the whole falsy family is
+// handled consistently, regardless of which env source the caller passes.
+export function isBashToolEnabled(env = process.env) {
+  const v = String(env?.OPENOVEL_ENABLE_BASH_TOOL ?? "").trim().toLowerCase()
+  return !["0", "false", "off", "no"].includes(v)
+}
+
 export class PermissionDeniedError extends Error {
   constructor(decision) {
     const subject = decision.permission || decision.toolId || "tool"
@@ -117,7 +127,7 @@ export function permissionPatternsForTool(permission, input = {}) {
 }
 
 export function defaultPermissionRules({ env = settingsEnv() } = {}) {
-  const bashEnabled = isTruthy(env.OPENOVEL_ENABLE_BASH_TOOL)
+  const bashEnabled = isBashToolEnabled(env)
   const allowBuiltins = [
     "read",
     "write",
@@ -147,8 +157,8 @@ export function defaultPermissionRules({ env = settingsEnv() } = {}) {
       pattern: "*",
       action: bashEnabled ? "allow" : "deny",
       reason: bashEnabled
-        ? "Bash was explicitly enabled by configuration."
-        : "Bash is disabled by default. Set OPENOVEL_ENABLE_BASH_TOOL=true to expose it.",
+        ? "Bash is available by default (OS-sandboxed)."
+        : "Bash was disabled by configuration (OPENOVEL_ENABLE_BASH_TOOL=false).",
       source: "default",
     },
   ]
@@ -245,7 +255,7 @@ function fallbackPatterns(input) {
 }
 
 function defaultActionForTool(tool, env) {
-  if (canonicalPermission(tool) === "bash") return isTruthy(env.OPENOVEL_ENABLE_BASH_TOOL) ? "allow" : "deny"
+  if (canonicalPermission(tool) === "bash") return isBashToolEnabled(env) ? "allow" : "deny"
   if (tool.dangerous || tool.destructive) return "ask"
   if (typeof tool.readOnly === "function") return "ask"
   if (tool.readOnly === true) return "allow"
@@ -253,8 +263,8 @@ function defaultActionForTool(tool, env) {
 }
 
 function defaultReasonForTool(tool, env) {
-  if (canonicalPermission(tool) === "bash" && !isTruthy(env.OPENOVEL_ENABLE_BASH_TOOL)) {
-    return "Bash is disabled by default. Set OPENOVEL_ENABLE_BASH_TOOL=true to expose it."
+  if (canonicalPermission(tool) === "bash" && !isBashToolEnabled(env)) {
+    return "Bash was disabled by configuration (OPENOVEL_ENABLE_BASH_TOOL=false)."
   }
   if (tool.dangerous || tool.destructive) return "No explicit permission rule matched this mutating tool."
   return "No explicit permission rule matched."

@@ -36,6 +36,19 @@ test("tool registry exposes agent-only tools only when explicitly included", () 
   assert.deepEqual(imageNames.sort(), ["fetch_image", "generate_image", "read"])
 })
 
+test("bash is model-exposed by default, gated behind includeDangerous", () => {
+  const registry = new ToolRegistry()
+  registerDefaultTools(registry)
+  // Default-on now (not hidden), but dangerous — so a pack only receives bash
+  // when it opts into dangerous tools. The standalone single Storykeeper opts in
+  // (lib/storykeeper.js → includeDangerous: true); the resident sub-agents opt in
+  // via their Agent Cards; the narrator-side composer packs do not.
+  const withDangerous = registry.openAITools({ includeDangerous: true }).map((t) => t.function.name)
+  const withoutDangerous = registry.openAITools({}).map((t) => t.function.name)
+  assert.ok(withDangerous.includes("bash"), "bash present when includeDangerous")
+  assert.equal(withoutDangerous.includes("bash"), false, "bash gated out without includeDangerous")
+})
+
 test("default tool registration supplements a partially initialized registry", () => {
   const registry = new ToolRegistry()
   registry.register({ id: "read", description: "placeholder", execute: async () => "placeholder" })

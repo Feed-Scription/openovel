@@ -50,7 +50,10 @@ const DEFAULT_SETTINGS = {
     punctuationPauses: true,
   },
   tools: {
-    bash: false,
+    // Default ON: bash is a standard background tool, OS-sandboxed (no network;
+    // writes confined to the workspace). Operators can still disable it via
+    // settings (tools.bash=false) or OPENOVEL_ENABLE_BASH_TOOL=false.
+    bash: true,
     // Opt-in: let the background loop author a per-story rich-render "format
     // contract" (ovl: fenced blocks + scoped CSS). Off by default. See
     // lib/formatContract.js.

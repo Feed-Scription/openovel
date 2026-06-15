@@ -3335,6 +3335,12 @@ function MusicTab() {
 
 const STORY_BEHAVIOR_GROUPS = [
   {
+    id: "engine",
+    titleKey: "settings.behavior.groups.engine.title",
+    descriptionKey: "settings.behavior.groups.engine.description",
+    toggleIds: ["residentTeam"],
+  },
+  {
     id: "storyStart",
     titleKey: "settings.behavior.groups.storyStart.title",
     descriptionKey: "settings.behavior.groups.storyStart.description",
@@ -3346,12 +3352,6 @@ const STORY_BEHAVIOR_GROUPS = [
     titleKey: "settings.behavior.groups.interaction.title",
     descriptionKey: "settings.behavior.groups.interaction.description",
     toggleIds: ["optionsEnabled", "fastMode"],
-  },
-  {
-    id: "engine",
-    titleKey: "settings.behavior.groups.engine.title",
-    descriptionKey: "settings.behavior.groups.engine.description",
-    toggleIds: ["residentTeam", "bashTool"],
   },
   {
     id: "diagnostics",

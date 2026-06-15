@@ -29,21 +29,23 @@ test("permission policy allows built-in story-scoped read/write tools by default
   assert.equal(write.action, "allow")
 })
 
-test("permission policy keeps bash denied unless explicitly enabled", () => {
-  const disabled = resolveToolPermission({
+test("permission policy allows bash by default, denies only when explicitly disabled", () => {
+  // Default ON: bash is a standard (OS-sandboxed) background tool.
+  const byDefault = resolveToolPermission({
     tool: { id: "bash", dangerous: true },
     input: { command: "date" },
     env: {},
   })
-  assert.equal(disabled.action, "deny")
-  assert.match(disabled.reason, /disabled by default/)
+  assert.equal(byDefault.action, "allow")
 
-  const enabled = resolveToolPermission({
+  // Explicit opt-out still disables it.
+  const disabled = resolveToolPermission({
     tool: { id: "bash", dangerous: true },
     input: { command: "date" },
-    env: { OPENOVEL_ENABLE_BASH_TOOL: "true" },
+    env: { OPENOVEL_ENABLE_BASH_TOOL: "false" },
   })
-  assert.equal(enabled.action, "allow")
+  assert.equal(disabled.action, "deny")
+  assert.match(disabled.reason, /disabled by configuration/)
 })
 
 test("permission rules override defaults with allow ask deny semantics", async () => {

@@ -131,15 +131,6 @@ const TOGGLES = [
     affects: "next-session",
   },
   {
-    id: "bashTool",
-    label: "Shell tool for the story team (advanced)",
-    description: "Let the behind-the-scenes team run shell commands (such as jq) to read and update your world's data. Runs in an OS sandbox: no internet access, and it can only write inside this story's files. Off by default.",
-    envKey: "OPENOVEL_ENABLE_BASH_TOOL",
-    settingsPath: ["tools", "bash"],
-    defaultValue: false,
-    affects: "next-session",
-  },
-  {
     id: "disableBackground",
     label: "Pause all background work (testing)",
     description: "Stop everything that happens behind the scenes between turns. For testing and comparisons.",

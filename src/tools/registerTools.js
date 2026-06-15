@@ -9,6 +9,7 @@ import { estimateTokenCount } from "../lib/tokenEstimate.js"
 import { runBashSandboxed } from "../lib/bashSandbox.js"
 import { backgroundJobs } from "../runtime/backgroundJob.js"
 import { enqueueAgentMessage, registeredAgentIds } from "../runtime/agentChannel.js"
+import { isBashToolEnabled } from "../runtime/permissionPolicy.js"
 import {
   createLoop,
   createMonitor,
@@ -1519,12 +1520,12 @@ export function registerDefaultTools(registry) {
     id: "bash",
     aliases: ["shell"],
     description:
-      "Run a shell command. Not exposed to models by default. The working directory is the ACTIVE STORY ROOT, so reference files relative to it, e.g. `jq . state/world_state.json` or `ls worldkeeper/`. NOTE: the `story/` prefix used in read/write/edit paths is a scope marker, NOT a real folder here, so do NOT write `story/state/...` in a shell command (it won't exist); drop the `story/` prefix. Runs inside an OS sandbox (no network; writes limited to the workspace), so ordinary commands including jq, mv, and rm operate only on workspace files; only catastrophic system commands are refused. Prefer dedicated read/grep/glob/write/edit/websearch/webfetch tools for story work; use monitor/loop instead of long-running shell watchers.",
+      "Run a shell command. The working directory is the ACTIVE STORY ROOT, so reference files relative to it, e.g. `jq . state/world_state.json` or `ls worldkeeper/`. NOTE: the `story/` prefix used in read/write/edit paths is a scope marker, NOT a real folder here, so do NOT write `story/state/...` in a shell command (it won't exist); drop the `story/` prefix. Runs inside an OS sandbox (no network; writes limited to the workspace), so ordinary commands including jq, mv, and rm operate only on workspace files; only catastrophic system commands are refused. Prefer dedicated read/grep/glob/write/edit/websearch/webfetch tools for story work; use monitor/loop instead of long-running shell watchers.",
     parameters: { command: "string", timeoutMs: "number?" },
     readOnly: false,
     destructive: true,
     dangerous: true,
-    exposeToModel: settingsEnv().OPENOVEL_ENABLE_BASH_TOOL === "true",
+    exposeToModel: isBashToolEnabled(settingsEnv()),
     async execute({ command, timeoutMs = 8000 }) {
       // Root the shell in the active story directory so relative paths line up
       // with the agent's domain (its read/write tools resolve `story/...` to the

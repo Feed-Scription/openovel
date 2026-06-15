@@ -12,8 +12,8 @@ toolConcurrency: 4
 domain: director
 tools: [read, edit, write, grep, glob, explain, bash]
 # bash (jq etc.) for crunching its own data (ngrams.json, ARC/QUALITY notes).
-# includeDangerous lets the dangerous-gated bash tool through when the operator
-# has enabled it (OPENOVEL_ENABLE_BASH_TOOL); bash itself stays OS-sandboxed.
+# includeDangerous lets the dangerous-gated bash tool through. bash is ON by
+# default (OS-sandboxed); operators can disable it with OPENOVEL_ENABLE_BASH_TOOL=false.
 includeDangerous: true
 writeScope:
   - story/director/**

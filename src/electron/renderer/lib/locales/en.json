@@ -493,7 +493,7 @@
         },
         "engine": {
           "title": "Behind-the-scenes story team",
-          "description": "Controls who maintains the world, characters, pacing, and files in the background, plus which local tools they can use."
+          "description": "Choose who maintains the world, characters, pacing, and files in the background — a small specialist team, or a single lighter-weight helper."
         },
         "diagnostics": {
           "title": "Testing and recording",
@@ -565,10 +565,6 @@
         "initNarratorPreview": {
           "label": "Preview the voice at setup",
           "description": "When starting a new story, hear the narrator's voice on a draft and fine-tune it over a round or two before you begin. Adds a little time up front."
-        },
-        "bashTool": {
-          "label": "Shell tool for the story team (advanced)",
-          "description": "Let the behind-the-scenes team run shell commands (such as jq) to read and update your world's data. Runs in an OS sandbox: no internet access, and it can only write inside this story's files. Off by default; needs macOS, or Linux with bubblewrap."
         },
         "disableBackground": {
           "label": "Pause all background work (testing)",

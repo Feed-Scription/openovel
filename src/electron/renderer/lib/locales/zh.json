@@ -493,7 +493,7 @@
         },
         "engine": {
           "title": "幕后故事团队",
-          "description": "控制谁在后台维护世界、人物、节奏和文件，以及他们能用哪些本地工具。"
+          "description": "选择由谁在后台维护世界、人物、节奏和文件——一个分工协作的小团队，或单个更轻量的助手。"
         },
         "diagnostics": {
           "title": "测试与记录",
@@ -565,10 +565,6 @@
         "initNarratorPreview": {
           "label": "建故事时先听听文风",
           "description": "开新故事时，先在草稿上听听叙述者的声音，开篇前打磨一两轮。开头会多花一点点时间。"
-        },
-        "bashTool": {
-          "label": "故事团队的命令行工具（高级）",
-          "description": "允许幕后团队运行命令行（如 jq）来读取和更新世界数据。运行在操作系统沙箱中：无法访问网络，且只能写入本故事的文件。默认关闭；需要 macOS，或装有 bubblewrap 的 Linux。"
         },
         "disableBackground": {
           "label": "暂停所有后台工作（测试用）",
