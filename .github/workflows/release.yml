@@ -78,9 +78,9 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: false
           files: |
-            release-assets/**/openovel-*.dmg
-            release-assets/**/openovel-*.zip
-            release-assets/**/openovel.*.exe
-            release-assets/**/openovel.*.exe.blockmap
-            release-assets/**/openovel-*.AppImage
-            release-assets/**/latest*.yml
+            release-assets/*/openovel-*.dmg
+            release-assets/*/openovel-*.zip
+            release-assets/*/openovel*.exe
+            release-assets/*/openovel*.exe.blockmap
+            release-assets/*/openovel-*.AppImage
+            release-assets/*/latest*.yml
