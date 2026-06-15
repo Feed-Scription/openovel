@@ -34,10 +34,45 @@ const DEFAULT_SKIP_DIRS = new Set([
   "transactions",      // mid-write transaction manifests
 ])
 
+// Extra top-level dirs dropped from a "starter"/clean export: runtime ledgers
+// and diagnostics that are machine/playthrough state, not authored story
+// content. DEFAULT_SKIP_DIRS (above) is already dropped from EVERY snapshot.
+const STARTER_SKIP_DIRS = new Set([
+  ...DEFAULT_SKIP_DIRS,
+  "jobs",              // backgroundJob ledger
+  "packets",           // foreground-context diagnostics + hot-path caches
+  "profiles",          // usage profile from non-interactive runs
+])
+
+// Per-file noise filter for a starter/clean export — returns true to DROP the
+// file. Targets resident-agent runtime plumbing wherever it lives (each agent
+// keeps a thread/queue/lock under its own domain dir, not just under agents/)
+// plus the runtime's append-only research audit log. agents/init-*.json (the
+// replayable init recording) is deliberately KEPT: it is authored provenance,
+// not noise, and powers the library's "replay init" affordance.
+function isStarterNoiseFile(rel) {
+  const base = rel.slice(rel.lastIndexOf("/") + 1)
+  if (rel.startsWith("agents/") && /^init-.*\.json$/i.test(base)) return false
+  if (base === "thread.jsonl" || base.endsWith(".thread.jsonl")) return true
+  if (base === "queue.jsonl" || base.endsWith(".queue.jsonl")) return true
+  if (base.endsWith(".lock")) return true
+  if (rel === "research/search-log.md") return true
+  return false
+}
+
+// Path-level variant for filtering an ALREADY-built bundle (which still carries
+// the STARTER_SKIP_DIRS dirs that the live-walk skips up front).
+function isStarterNoisePath(rel) {
+  const top = rel.split("/")[0]
+  if (STARTER_SKIP_DIRS.has(top)) return true
+  return isStarterNoiseFile(rel)
+}
+
 // Walks a story root and emits a flat list of files in the format the
 // snapshot bundle expects.
 async function collectFiles(rootDir, opts = {}) {
   const skipDirs = opts.skipDirs || DEFAULT_SKIP_DIRS
+  const skipFile = opts.skipFile || null
   const out = []
   async function walk(dir, prefix) {
     let entries
@@ -51,6 +86,9 @@ async function collectFiles(rootDir, opts = {}) {
         if (skipDirs.has(e.name)) continue
         await walk(full, rel)
       } else if (e.isFile()) {
+        // Drop filtered files BEFORE the read so a clean export never even
+        // loads a huge agent thread / queue into memory.
+        if (skipFile && skipFile(rel)) continue
         const st = await stat(full).catch(() => null)
         if (!st) continue
         if (st.size > MAX_FILE_SIZE) {
@@ -78,10 +116,12 @@ function encodeFile(rel, buf) {
   return { path: rel, encoding: "base64", content: buf.toString("base64") }
 }
 
-export async function createSnapshot({ storyRoot, storyId, label = "" }) {
+export async function createSnapshot({ storyRoot, storyId, label = "", clean = false }) {
   if (!storyRoot) throw new Error("createSnapshot: storyRoot is required")
-  const files = await collectFiles(storyRoot)
-  return {
+  const files = clean
+    ? await collectFiles(storyRoot, { skipDirs: STARTER_SKIP_DIRS, skipFile: isStarterNoiseFile })
+    : await collectFiles(storyRoot)
+  const bundle = {
     format: SNAPSHOT_FORMAT,
     snapshotAt: new Date().toISOString(),
     storyId: storyId || "",
@@ -89,6 +129,20 @@ export async function createSnapshot({ storyRoot, storyId, label = "" }) {
     fileCount: files.length,
     files,
   }
+  // Only stamp `clean` on clean exports so an ordinary snapshot's JSON stays
+  // byte-for-byte what it was before this option existed.
+  if (clean) bundle.clean = true
+  return bundle
+}
+
+// Strip starter-noise files from an ALREADY-built bundle and mark it clean.
+// Used to produce a shippable starter from a bundle captured without the clean
+// filter (e.g. the auto-saved initial.json). Returns a new bundle; the input is
+// left untouched.
+export function filterStarterBundle(bundle) {
+  if (!bundle || !Array.isArray(bundle.files)) return bundle
+  const files = bundle.files.filter((f) => f && !isStarterNoisePath(f.path))
+  return { ...bundle, clean: true, fileCount: files.length, files }
 }
 
 export async function writeSnapshotToFile(bundle, filePath) {

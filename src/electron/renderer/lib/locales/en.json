@@ -730,6 +730,8 @@
       "exportInitial": "Export initial snapshot…",
       "exportInitialMissing": "This story has no saved initial version (imported or created before this feature).",
       "exportInitialMissingTag": "none saved",
+      "exportStarter": "Export as sample (clean)…",
+      "exportStarterHint": "Clean snapshot for bundling as a starter (strips logs, agent threads, caches).",
       "restart": "Restart from opening",
       "restartConfirm": "Confirm restart",
       "restartHint": "Current progress is saved as a version",

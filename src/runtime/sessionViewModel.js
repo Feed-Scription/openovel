@@ -502,6 +502,10 @@ export class SessionViewModel extends EventEmitter {
   #unsubscribe = []
   #started = false
   #shuttingDown = false
+  // Once-per-process guard for first-run starter-story seeding (see
+  // #maybeSeedStarterStories). Re-entrant #enterStorySelector calls (refresh on
+  // rename/delete/import) must not re-attempt the seed.
+  #starterSeedAttempted = false
   #env
   // jobId → activityId, so background.job.completed can mark the right row
   // done without scanning the whole activity list. Bounded by #wireBus
@@ -808,6 +812,45 @@ export class SessionViewModel extends EventEmitter {
     return this.#enterStorySelector()
   }
 
+  // First-run starter seeding. Into an EMPTY library (no real on-disk story
+  // yet), install the bundled starter novels (lib/starterStories.js) so a fresh
+  // user has something to open without going through init. Once-per-process via
+  // the guard; idempotent ACROSS launches via the per-home seeded marker (a
+  // deleted starter stays deleted). Best-effort: any failure is reported and
+  // never blocks the library from rendering.
+  async #maybeSeedStarterStories() {
+    if (this.#starterSeedAttempted) return
+    this.#starterSeedAttempted = true
+    try {
+      const stories = await listStories({ env: this.#env }).catch(() => [])
+      const hasUserStory = stories.some((s) => !s.isProjectLocal && s.exists)
+      if (hasUserStory) return
+
+      const { seedStarterStories, coarseLang } = await import("../lib/starterStories.js")
+      // Filter starters to the reader's story-language preference (USER.md), so
+      // an English user isn't seeded a shelf of Chinese demos. Ambiguous ⇒ "" ⇒
+      // the seeder applies no language constraint.
+      let lang = ""
+      try {
+        const { getMemorySnapshot } = await import("../memory/memoryStore.js")
+        const snap = await getMemorySnapshot()
+        lang = coarseLang(snap?.user || "")
+      } catch { /* lang stays "" → seed all */ }
+
+      const result = await seedStarterStories({
+        env: this.#env,
+        lang,
+        importBundle: (bundle) => this.importStorySnapshot({ bundle }),
+      })
+      if (result.seeded.length) {
+        process.stderr.write(`[starters] seeded ${result.seeded.length}: ${result.seeded.join(", ")}\n`)
+      }
+    } catch (err) {
+      const mod = await import("../lib/notices.js").catch(() => null)
+      mod?.reportNotices?.([`starter seed failed: ${err?.message || err}`], { prefix: "starters" })
+    }
+  }
+
   async #enterStorySelector() {
     // Put the current book down: stop in-flight background work for this
     // session, clear the in-memory transcript and guidance buffers, and
@@ -844,6 +887,11 @@ export class SessionViewModel extends EventEmitter {
       jobs: [],
       activeTools: [],
     })
+
+    // First-run only: into an EMPTY library, install the bundled starter
+    // novels so a fresh user has something to open. Idempotent + best-effort;
+    // runs before listStories so the seeded cards appear immediately.
+    await this.#maybeSeedStarterStories()
 
     const stories = await listStories({ env: this.#env }).catch(() => [])
     // Hide the project-local ./story sentinel from the Electron library by
@@ -1580,19 +1628,41 @@ export class SessionViewModel extends EventEmitter {
   // it wherever they want. `kind` = "current" (fresh capture of live state)
   // or "initial" (load the auto-saved post-init bundle from disk).
   async exportStorySnapshot({ storyId, kind = "current" } = {}) {
-    const { createSnapshot, readSnapshotFile, initialSnapshotPath } = await import("../lib/storySnapshot.js")
-    const sp = storyPaths({ env: this.#env })
+    const { createSnapshot, readSnapshotFile, filterStarterBundle, initialSnapshotPath } = await import("../lib/storySnapshot.js")
     const desc = currentStoryDescriptor({ env: this.#env })
     const id = storyId || desc.id
     if (kind === "initial") {
       const filePath = initialSnapshotPath(id, this.#env)
       return readSnapshotFile(filePath)
     }
-    return createSnapshot({
-      storyRoot: sp.root,
-      storyId: id,
-      label: "current",
-    })
+    if (kind === "starter-initial") {
+      // Same clean filter, but applied to the auto-saved opening snapshot — the
+      // shippable, pristine 0-turn version with no playthrough state at all.
+      return filterStarterBundle(await readSnapshotFile(initialSnapshotPath(id, this.#env)))
+    }
+    // current / starter both snapshot the live root. Resolve it by the REQUESTED
+    // id (not the active env): the export menu lives in the library, where the
+    // env still points at the last-opened story, so a stale sp.root would
+    // snapshot the wrong card.
+    const root = await this.#storyRootById(id)
+    if (kind === "starter") {
+      // Clean export for shipping as a bundled starter: strips runtime ledgers,
+      // resident-agent threads/queues, and the research log so only authored
+      // story content rides along. Snapshots the current state; Restart first
+      // (or use starter-initial) for the pristine opening.
+      return createSnapshot({ storyRoot: root, storyId: id, label: "starter", clean: true })
+    }
+    return createSnapshot({ storyRoot: root, storyId: id, label: "current" })
+  }
+
+  // Resolve a story's live root directory by its library id. Falls back to the
+  // active env's root when the id is unknown (matches the prior behavior).
+  async #storyRootById(id) {
+    const fallback = () => storyPaths({ env: this.#env }).root
+    if (!id) return fallback()
+    const stories = await listStories({ env: this.#env }).catch(() => [])
+    const match = stories.find((s) => s.id === id)
+    return match?.root || fallback()
   }
 
   // Public: build a reader-facing export of the story narrative (EPUB or

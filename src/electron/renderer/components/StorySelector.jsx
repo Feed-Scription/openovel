@@ -846,6 +846,16 @@ function StoryCard({
                   {t("stories.menu.exportInitial")}
                 </button>
               </li>
+              <li>
+                <button
+                  type="button"
+                  className="story-card-menu-item"
+                  onClick={(e) => { e.stopPropagation(); onExport?.("starter") }}
+                  title={t("stories.menu.exportStarterHint", { defaultValue: "Clean snapshot for bundling as a starter (strips logs, agent threads, caches)." })}
+                >
+                  {t("stories.menu.exportStarter", { defaultValue: "Export as sample (clean)…" })}
+                </button>
+              </li>
               <li className="story-card-menu-divider" aria-hidden="true" />
               <li>
                 <button

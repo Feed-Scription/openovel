@@ -7,6 +7,7 @@ import test from "node:test"
 
 import {
   createSnapshot,
+  filterStarterBundle,
   restoreSnapshotInPlace,
   saveVersion,
   listVersions,
@@ -17,6 +18,89 @@ import {
 async function tmpDir(prefix) {
   return mkdtemp(path.join(os.tmpdir(), prefix))
 }
+
+// A story tree mixing authored content with runtime noise, used by both the
+// clean-snapshot and filterStarterBundle tests.
+async function seedNoisyStory(root) {
+  await mkdir(path.join(root, "canon"), { recursive: true })
+  await mkdir(path.join(root, "agents"), { recursive: true })
+  await mkdir(path.join(root, "worldkeeper"), { recursive: true })
+  await mkdir(path.join(root, "research"), { recursive: true })
+  await mkdir(path.join(root, "jobs"), { recursive: true })
+  await mkdir(path.join(root, "packets"), { recursive: true })
+  await mkdir(path.join(root, "profiles"), { recursive: true })
+  // Authored content — KEEP.
+  await writeFile(path.join(root, "meta.json"), JSON.stringify({ displayName: "Demo" }), "utf8")
+  await writeFile(path.join(root, "canon", "chapters.md"), "opening prose\n", "utf8")
+  await writeFile(path.join(root, "worldkeeper", "notebook.md"), "world state\n", "utf8")
+  await writeFile(path.join(root, "research", "ResearchNotes.md"), "kept notes\n", "utf8")
+  await writeFile(path.join(root, "agents", "init-2026-01-01T00-00-00-000Z-ab12.json"), "{}", "utf8")
+  // Runtime noise — DROP.
+  await writeFile(path.join(root, "agents", "storykeeper.thread.jsonl"), "{}\n", "utf8")
+  await writeFile(path.join(root, "agents", "storykeeper.queue.jsonl"), "{}\n", "utf8")
+  await writeFile(path.join(root, "worldkeeper", "thread.jsonl"), "{}\n", "utf8")
+  await writeFile(path.join(root, "worldkeeper", "inbox.queue.jsonl"), "{}\n", "utf8")
+  await writeFile(path.join(root, "worldkeeper", "agent.lock"), "1", "utf8")
+  await writeFile(path.join(root, "research", "search-log.md"), "## query\n", "utf8")
+  await writeFile(path.join(root, "jobs", "jobs.jsonl"), "{}\n", "utf8")
+  await writeFile(path.join(root, "packets", "foreground_context.report.latest.json"), "{}", "utf8")
+  await writeFile(path.join(root, "profiles", "profile.latest.json"), "{}", "utf8")
+}
+
+const KEPT = [
+  "meta.json",
+  "canon/chapters.md",
+  "worldkeeper/notebook.md",
+  "research/ResearchNotes.md",
+  "agents/init-2026-01-01T00-00-00-000Z-ab12.json",
+]
+const DROPPED = [
+  "agents/storykeeper.thread.jsonl",
+  "agents/storykeeper.queue.jsonl",
+  "worldkeeper/thread.jsonl",
+  "worldkeeper/inbox.queue.jsonl",
+  "worldkeeper/agent.lock",
+  "research/search-log.md",
+  "jobs/jobs.jsonl",
+  "packets/foreground_context.report.latest.json",
+  "profiles/profile.latest.json",
+]
+
+test("createSnapshot({clean}) drops runtime noise, keeps authored content + init replay", async () => {
+  const root = await tmpDir("ovl-snap-clean-")
+  await seedNoisyStory(root)
+  const bundle = await createSnapshot({ storyRoot: root, storyId: "s_clean", clean: true })
+  const paths = new Set(bundle.files.map((f) => f.path))
+  assert.equal(bundle.clean, true)
+  for (const p of KEPT) assert.ok(paths.has(p), `expected kept: ${p}`)
+  for (const p of DROPPED) assert.equal(paths.has(p), false, `expected dropped: ${p}`)
+})
+
+test("plain createSnapshot stays full and stamps no clean flag", async () => {
+  const root = await tmpDir("ovl-snap-full-")
+  await seedNoisyStory(root)
+  const bundle = await createSnapshot({ storyRoot: root, storyId: "s_full" })
+  const paths = new Set(bundle.files.map((f) => f.path))
+  assert.equal(bundle.clean, undefined)
+  // The noise files ARE present in an ordinary snapshot.
+  assert.ok(paths.has("research/search-log.md"))
+  assert.ok(paths.has("jobs/jobs.jsonl"))
+})
+
+test("filterStarterBundle cleans an already-built (non-clean) bundle", async () => {
+  const root = await tmpDir("ovl-snap-filter-")
+  await seedNoisyStory(root)
+  const full = await createSnapshot({ storyRoot: root, storyId: "s_filter" })
+  const cleaned = filterStarterBundle(full)
+  const paths = new Set(cleaned.files.map((f) => f.path))
+  assert.equal(cleaned.clean, true)
+  assert.equal(cleaned.fileCount, cleaned.files.length)
+  assert.ok(cleaned.files.length < full.files.length)
+  for (const p of KEPT) assert.ok(paths.has(p), `expected kept: ${p}`)
+  for (const p of DROPPED) assert.equal(paths.has(p), false, `expected dropped: ${p}`)
+  // The input bundle is untouched.
+  assert.ok(full.files.some((f) => f.path === "jobs/jobs.jsonl"))
+})
 
 test("restoreSnapshotInPlace reverts edits, drops post-snapshot files, keeps skip dirs", async () => {
   const root = await tmpDir("ovl-snap-root-")

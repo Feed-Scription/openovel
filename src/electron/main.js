@@ -166,6 +166,16 @@ const here = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(here, "..", "..")
 const RENDERER_HTML = path.join(ROOT, "dist-electron", "renderer", "index.html")
 const PRELOAD = path.join(here, "preload.cjs")
+// Bundled starter stories. Packaged builds ship them outside the asar via
+// electron-builder extraResources (→ process.resourcesPath/starter-stories);
+// dev runs read them straight from the repo. The VM's first-run seeder reads
+// this env var (src/lib/starterStories.js). Honor a pre-set value so tests /
+// sandboxes can point it elsewhere.
+if (!process.env.OPENOVEL_STARTER_DIR) {
+  process.env.OPENOVEL_STARTER_DIR = app.isPackaged
+    ? path.join(process.resourcesPath, "starter-stories")
+    : path.join(ROOT, "resources", "starter-stories")
+}
 // Two icon files on purpose:
 // - icon.png is the bare 1024 square, fed to electron-builder so macOS can
 //   apply its own squircle mask when generating the .icns for packaged builds.

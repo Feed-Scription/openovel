@@ -730,6 +730,8 @@
       "exportInitial": "导出初始版本…",
       "exportInitialMissing": "该故事没有保存初始版本（导入的，或在此功能之前创建）。",
       "exportInitialMissingTag": "无初始版本",
+      "exportStarter": "导出为干净示例…",
+      "exportStarterHint": "用于内置示例的干净快照，会剔除运行日志、Agent 线程与缓存。",
       "restart": "重新开始",
       "restartConfirm": "确认重新开始",
       "restartHint": "当前进度会存为历史版本",
