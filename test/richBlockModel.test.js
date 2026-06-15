@@ -11,7 +11,29 @@ import {
   parseBackgroundFromText,
   latestBackgroundFromEntries,
   parseMusicCueFromText,
+  escapeStandaloneListMarkers,
 } from "../src/electron/renderer/lib/richBlockModel.js"
+
+test("escapeStandaloneListMarkers: a bare number-dot line is escaped (not parsed as an ordered list)", () => {
+  // The reported bug: "1999." alone becomes <ol start=1999>, marker clipped.
+  assert.equal(
+    escapeStandaloneListMarkers("He looked at the calendar.\n\n1999.\n\nNot a joke."),
+    "He looked at the calendar.\n\n1999\\.\n\nNot a joke.",
+  )
+  // Bare "1." and "12)" too; leading indent + trailing spaces preserved.
+  assert.equal(escapeStandaloneListMarkers("1."), "1\\.")
+  assert.equal(escapeStandaloneListMarkers("  12)  "), "  12\\)  ")
+})
+
+test("escapeStandaloneListMarkers: genuine list items and ordinary prose are untouched", () => {
+  // A real ordered list (content after the marker) must still render as a list.
+  const list = "1. First\n2. Second"
+  assert.equal(escapeStandaloneListMarkers(list), list)
+  // No delimiter, or not a CommonMark-legal marker → unchanged.
+  assert.equal(escapeStandaloneListMarkers("1999 was the year"), "1999 was the year")
+  assert.equal(escapeStandaloneListMarkers("The year was 1999."), "The year was 1999.")
+  assert.equal(escapeStandaloneListMarkers("1234567890."), "1234567890.") // 10 digits: not a list marker
+})
 
 test("fillSlots: {{body}}/{{raw}} → whole fence body (body-mode block)", () => {
   const parsed = parseFence("$ ls\nfile.txt", "raw")

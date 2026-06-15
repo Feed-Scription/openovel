@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Streamdown, defaultRehypePlugins, useIsCodeFenceIncomplete } from "streamdown"
 import { ComicStrip } from "./ComicStrip.jsx"
 import { rehypeHighlightQuotes } from "../lib/highlightQuotes.js"
-import { stripHudFencesFromText, stripMusicFencesFromText, stripBgFencesFromText } from "../lib/richBlockModel.js"
+import { stripHudFencesFromText, stripMusicFencesFromText, stripBgFencesFromText, escapeStandaloneListMarkers } from "../lib/richBlockModel.js"
 
 // Streamdown's rehypePlugins prop REPLACES its defaults (raw/sanitize/harden),
 // so we spread them back in and append our quote highlighter last — running
@@ -147,7 +147,9 @@ function EntryView({ entry, prev, richRenderers, narrationRehype = NARRATION_REH
     // `ovl:hud` is a reserved data channel, never prose. Strip it even before
     // the first format-contract refresh has reached the renderer; otherwise the
     // inaugural HUD update can briefly degrade into a plain code block.
-    const narrationText = stripBgFencesFromText(stripMusicFencesFromText(stripHudFencesFromText(rawText)))
+    // escapeStandaloneListMarkers last: a bare "1999." line would otherwise be
+    // parsed as an ordered list and render its marker clipped in the gutter.
+    const narrationText = escapeStandaloneListMarkers(stripBgFencesFromText(stripMusicFencesFromText(stripHudFencesFromText(rawText))))
     const animating = !entry.complete || ttsActive
     // Always render narration through Streamdown, including while streaming.
     // Completed entries are memoized, so only the active entry reparses; this

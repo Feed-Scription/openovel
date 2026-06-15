@@ -235,6 +235,21 @@ export function stripBgFencesFromText(text) {
     .replace(/\n{3,}/g, "\n\n")
 }
 
+// Narrator prose sometimes contains a line that is JUST a number followed by a
+// period (a dramatic standalone year like "1999." or a bare "1."). CommonMark
+// parses that as an ordered-list item (e.g. <ol start="1999">), so the number
+// renders as a list MARKER in the left gutter — and a wide marker like "1999."
+// overflows the narrow gutter and gets clipped by the reading column's edge.
+// Escape the delimiter on lines whose ENTIRE content is a (CommonMark-legal,
+// ≤9-digit) ordered-list marker so they render as ordinary prose paragraphs.
+// Real list items — which carry text after the marker (`1. Something`) — never
+// match, so genuine markdown lists are untouched. Render-only (like the strip*
+// helpers); the persisted entry text is unchanged.
+const STANDALONE_LIST_MARKER_RE = /^([ \t]*)(\d{1,9})([.)])([ \t]*)$/gm
+export function escapeStandaloneListMarkers(text) {
+  return String(text ?? "").replace(STANDALONE_LIST_MARKER_RE, "$1$2\\$3$4")
+}
+
 // The LAST valid directive across every ovl:bg fence in `text`, or null.
 // { verb: "set", rel, src } with src an ovl-asset:// URL, or { verb: "clear" }.
 export function parseBackgroundFromText(text) {
