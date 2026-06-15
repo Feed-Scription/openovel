@@ -1,0 +1,52 @@
+name: Starter story
+description: Propose or submit a bundled starter story.
+title: "[Starter]: "
+labels: ["starter-story"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Starter stories are clean exported snapshots. See
+        resources/starter-stories/README.md for the export format.
+  - type: input
+    id: title
+    attributes:
+      label: Story title
+      placeholder: The Lighthouse at...
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - Chinese
+        - Japanese
+        - Korean
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: pitch
+    attributes:
+      label: Playable pitch
+      description: What fantasy, genre, or first decision does this starter offer?
+    validations:
+      required: true
+  - type: checkboxes
+    id: cleanup
+    attributes:
+      label: Cleanup checklist
+      options:
+        - label: The snapshot was exported with the clean starter-story export flow.
+          required: true
+        - label: It contains no API keys, private names, private paths, or raw model transcripts.
+          required: true
+        - label: It reaches a playable first decision quickly.
+          required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Attach the snapshot in a PR, or describe what still needs help.

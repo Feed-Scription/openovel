@@ -1,0 +1,46 @@
+name: Feature request
+description: Suggest a user-facing improvement or runtime capability.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem would this solve?
+      placeholder: When I...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the smallest useful version of the feature.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Electron app
+        - Story runtime
+        - Resident agents
+        - Providers / model routing
+        - Starter stories
+        - Export / import
+        - Documentation
+        - Packaging
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: Anything this should preserve, such as local-first storage, the foreground/background split, or file-native story state.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Optional. What workaround do you use today?

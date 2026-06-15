@@ -30,6 +30,7 @@
     "dist:mac:portable": "node scripts/mac-portable.mjs arm64",
     "dist:mac:portable:x64": "node scripts/mac-portable.mjs x64",
     "dist:mac:portable:universal": "node scripts/mac-portable.mjs universal",
+    "mac:unquarantine": "node scripts/macos-gatekeeper.mjs",
     "dist:win": "npm run build:electron && electron-builder --win",
     "dist:linux": "npm run build:electron && electron-builder --linux",
     "start": "npm run electron",

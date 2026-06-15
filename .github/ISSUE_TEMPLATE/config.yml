@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Configuration help
+    url: https://github.com/Feed-Scription/openovel/blob/main/docs/configuration.md
+    about: Check settings layering and provider diagnostics before filing setup issues.
+  - name: Release process
+    url: https://github.com/Feed-Scription/openovel/blob/main/docs/releases.md
+    about: Maintainer notes for packaging and GitHub Releases.

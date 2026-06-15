@@ -4,7 +4,7 @@
 //
 // Steps:
 //   1. esbuild the renderer (npm run build:electron)
-//   2. electron-builder --mac dir          → unsigned .app in dist/mac-<arch>/
+//   2. electron-builder --mac dir          → unsigned .app in dist-electron/release/mac-<arch>/
 //   3. codesign --force --deep --sign -    → minimal ad-hoc sign so the
 //                                            Apple Silicon kernel accepts it
 //   4. ditto -c -k --sequesterRsrc         → zip the signed .app
@@ -33,9 +33,11 @@ const version = pkg.version
 const productName = pkg.build?.productName || pkg.name
 
 // electron-builder names directories `mac-arm64` / `mac-x64` / `mac-universal`
-const appOutDir = path.join(REPO, "dist", arch === "x64" ? "mac" : `mac-${arch}`)
+// under the configured output directory.
+const releaseDir = path.join(REPO, "dist-electron", "release")
+const appOutDir = path.join(releaseDir, arch === "x64" ? "mac" : `mac-${arch}`)
 const appPath = path.join(appOutDir, `${productName}.app`)
-const zipPath = path.join(REPO, "dist", `${productName}-${version}-${arch}-mac.zip`)
+const zipPath = path.join(releaseDir, `${productName}-${version}-${arch}-mac.zip`)
 
 async function run(cmd, args, opts = {}) {
   console.log(`$ ${cmd} ${args.map((a) => (a.includes(" ") ? `"${a}"` : a)).join(" ")}`)
