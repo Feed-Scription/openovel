@@ -7,6 +7,7 @@
 </p>
 
 <p align="center">
+  <a href="#preview">Preview</a> ·
   <a href="#download">Download</a> ·
   <a href="#quick-start">Quick start</a> ·
   <a href="#why-openovel">Why openovel</a> ·
@@ -19,6 +20,12 @@ openovel is an open-source, local-first AI interactive fiction app: the reader d
 It is built around a **dual-loop** design. A fast foreground narrator answers the reader immediately; an asynchronous **background brain** maintains durable story knowledge. By default that brain is a small **resident team** of specialized agents — a Showrunner coordinator plus World Keeper, Director, Card Manager, and Memory agents (and feature-gated render / image / music agents) — with a single **Storykeeper** agent as the fallback (`OPENOVEL_RESIDENT_TEAM=0`). The two loops communicate through Markdown / JSON / JSONL files, with no vector store, no RAG layer, and no graph database.
 
 Status: **Demo phase**. The app is usable end-to-end, but APIs and on-disk layouts may still change between iterations. It is not versioned as a stable downstream dependency yet. Development and testing happen primarily on **macOS**; Windows and Linux builds are produced but only lightly tested.
+
+## Preview
+
+<p align="center">
+  <img src="./assets/screenshot.webp" alt="openovel Electron app showing a running interactive fiction scene" width="860" />
+</p>
 
 ## Download
 
@@ -62,12 +69,6 @@ I wake up in the abandoned ferry terminal and look around.
 ```
 
 The narrator answers in seconds. The background brain continues asynchronously, so the next turn benefits from updated continuity without blocking the current one.
-
-## Preview
-
-<p align="center">
-  <img src="./assets/screenshot.webp" alt="openovel Electron app showing a running interactive fiction scene" width="860" />
-</p>
 
 ## How it works
 
