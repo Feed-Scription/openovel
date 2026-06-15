@@ -705,7 +705,7 @@
   },
   "stories": {
     "title": "From your library",
-    "hint": "←→↑↓ navigate · Enter to open · double-click to open",
+    "hint": "←→↑↓ navigate · Enter to open · click to open",
     "newStory": "New story",
     "import": "Import…",
     "searchPlaceholder": "Search stories…",

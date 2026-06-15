@@ -267,6 +267,12 @@ export function StorySelector({ state, actions }) {
     return () => window.removeEventListener("keydown", onKey)
   }, [actions, menuFor, onPickImport, sel])
 
+  const openStoryItem = useCallback((item, idx) => {
+    actions.moveStorySelector(idx - sel.cursor)
+    if (item.isImport) onPickImport()
+    else actions.confirmStorySelection()
+  }, [actions, onPickImport, sel.cursor])
+
   return (
     <div className="story-selector">
       <div className="story-selector-bar">
@@ -298,12 +304,7 @@ export function StorySelector({ state, actions }) {
             menuOpen={menuFor === item.id}
             deleteArmed={deleteArmed === item.id}
             renaming={renamingFor === item.id}
-            onClick={() => actions.moveStorySelector(idx - sel.cursor)}
-            onDoubleClick={() => {
-              actions.moveStorySelector(idx - sel.cursor)
-              if (item.isImport) onPickImport()
-              else actions.confirmStorySelection()
-            }}
+            onClick={() => openStoryItem(item, idx)}
             onToggleMenu={(e) => {
               e.stopPropagation()
               setDeleteArmed(null)
@@ -508,7 +509,6 @@ function StoryCard({
   comicModeAvailable,
   fastModeAvailable,
   onClick,
-  onDoubleClick,
   onToggleMenu,
   onDelete,
   onExport,
@@ -585,7 +585,6 @@ function StoryCard({
       <li
         className={`story-card story-card-new${selected ? " is-selected" : ""}`}
         onClick={onClick}
-        onDoubleClick={onDoubleClick}
       >
         <div className="story-card-cover">
           <span className="story-card-plus" aria-hidden="true">+</span>
@@ -599,7 +598,6 @@ function StoryCard({
       <li
         className={`story-card story-card-new${selected ? " is-selected" : ""}`}
         onClick={onClick}
-        onDoubleClick={onDoubleClick}
       >
         <div className="story-card-cover">
           <span className="story-card-plus" aria-hidden="true">↥</span>
@@ -619,7 +617,6 @@ function StoryCard({
     <li
       className={`story-card${selected ? " is-selected" : ""}${menuOpen ? " has-menu-open" : ""}`}
       onClick={onClick}
-      onDoubleClick={onDoubleClick}
     >
       <div
         className={`story-card-cover${coverTones.head === "dark" ? " cover-head-dark" : ""}${coverTones.foot === "dark" ? " cover-foot-dark" : ""}`}

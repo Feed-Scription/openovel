@@ -705,7 +705,7 @@
   },
   "stories": {
     "title": "你的故事库",
-    "hint": "←→↑↓ 导航 · Enter 打开 · 双击打开",
+    "hint": "←→↑↓ 导航 · Enter 打开 · 单击打开",
     "newStory": "新建故事",
     "import": "导入…",
     "searchPlaceholder": "搜索故事…",
