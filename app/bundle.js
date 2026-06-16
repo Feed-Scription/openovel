@@ -41493,12 +41493,12 @@ function ApiKeysTab({ compact = false, section = "all", mode = "advanced" } = {}
         return next;
       });
       const spec = (snap?.keys || []).find((k) => k.id === id2);
-      if (value && spec?.category === "llm" && mode !== "advanced") {
+      if (value && spec?.category === "llm" && mode !== "advanced" && !window.openovel?.isWeb) {
         setStatus("saved");
         await runLlmTest();
         setTimeout(() => setStatus(""), 1500);
       } else {
-        setStatus(value ? "saved \xB7 key updated" : "saved \xB7 key cleared");
+        setStatus(value && spec?.category === "llm" && window.openovel?.isWeb ? "saved locally \xB7 open the desktop app to connect" : value ? "saved \xB7 key updated" : "saved \xB7 key cleared");
         setTimeout(() => setStatus(""), 1800);
       }
     } catch (e2) {
