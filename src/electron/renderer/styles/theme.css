@@ -361,6 +361,31 @@ html, body, #root {
 .config-banner-error { border-left-color: var(--voice-error); color: var(--ink-mid); }
 .config-banner-error:hover { color: var(--voice-error); border-left-color: var(--voice-error); }
 .config-banner-error .config-banner-link { color: var(--voice-error); }
+
+.web-download-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  margin: 0 0 18px;
+  padding: 10px 14px;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--paper-lift) 64%, transparent);
+  color: var(--ink-mid);
+  font-family: var(--font-sans);
+  font-size: var(--fs-row);
+  line-height: 1.45;
+}
+.web-download-notice a {
+  flex: 0 0 auto;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
 /* The modal-backdrop must stay position: fixed — DO NOT include it above. */
 .modal-backdrop { z-index: 100; }
 

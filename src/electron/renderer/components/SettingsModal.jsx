@@ -1249,7 +1249,7 @@ export function ApiKeysTab({ compact = false, section = "all", mode = "advanced"
       // Clearing the slot is just a save; testing an empty key would mislabel
       // the result. Search keys also skip the test (no webSearch ping).
       const spec = (snap?.keys || []).find((k) => k.id === id)
-      if (value && spec?.category === "llm" && mode !== "advanced") {
+      if (value && spec?.category === "llm" && mode !== "advanced" && !window.openovel?.isWeb) {
         // The banner below carries the verbose result; here just say
         // "saved" briefly and clear, so the action row isn't duplicating
         // the banner's "Connected"/"Connection failed".
@@ -1257,7 +1257,9 @@ export function ApiKeysTab({ compact = false, section = "all", mode = "advanced"
         await runLlmTest()
         setTimeout(() => setStatus(""), 1500)
       } else {
-        setStatus(value ? "saved · key updated" : "saved · key cleared")
+        setStatus(value && spec?.category === "llm" && window.openovel?.isWeb
+          ? "saved locally · open the desktop app to connect"
+          : value ? "saved · key updated" : "saved · key cleared")
         setTimeout(() => setStatus(""), 1800)
       }
     } catch (e) {

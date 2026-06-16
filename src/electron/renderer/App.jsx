@@ -124,6 +124,18 @@ function ConfigBanner({ status, onClick }) {
   )
 }
 
+function WebDownloadNotice() {
+  return (
+    <div className="web-download-notice" role="note">
+      <span>
+        Online preview mode. The desktop app has the full local-first runtime,
+        story files, imports, exports, and background agents.
+      </span>
+      <a href="https://github.com/Feed-Scription/openovel/releases">Download desktop</a>
+    </div>
+  )
+}
+
 const CONNECTION_ERROR_LABEL = {
   "missing-key": "no API key configured",
   "auth":        "API key rejected",
@@ -531,6 +543,7 @@ export function App() {
           {!state.lastError && configStatus && !configStatus.ok && (
             <ConfigBanner status={configStatus} onClick={() => setSettingsOpen(true)} />
           )}
+          {window.openovel?.isWeb && <WebDownloadNotice />}
           {body}
         </div>
       </main>

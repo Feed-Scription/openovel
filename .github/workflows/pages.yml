@@ -1,0 +1,62 @@
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: "1"
+
+      - name: Build Pages site
+        run: npm run build:pages
+
+      - name: Publish gh-pages branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          pages_dir="$(mktemp -d)"
+          cp -R dist-pages/. "$pages_dir/"
+
+          git fetch origin gh-pages || true
+          if git rev-parse --verify origin/gh-pages; then
+            git switch --detach origin/gh-pages
+          else
+            git switch --orphan gh-pages
+          fi
+
+          git rm -rf . >/dev/null 2>&1 || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R "$pages_dir/." .
+
+          git add .
+          if git diff --cached --quiet; then
+            echo "No Pages changes to deploy."
+            exit 0
+          fi
+
+          git commit -m "Deploy GitHub Pages"
+          git push origin HEAD:gh-pages

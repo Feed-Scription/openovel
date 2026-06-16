@@ -22,6 +22,7 @@
   "type": "module",
   "main": "src/electron/main.js",
   "scripts": {
+    "build:pages": "node scripts/build-pages.mjs",
     "build:electron": "node scripts/build-electron.mjs",
     "electron": "npm run build:electron && node scripts/patch-electron-dev-icon.mjs && electron .",
     "electron:dev": "OPENOVEL_ELECTRON_DEVTOOLS=1 npm run build:electron && node scripts/patch-electron-dev-icon.mjs && electron .",
