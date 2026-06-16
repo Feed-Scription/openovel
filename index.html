@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="openovel is a local-first AI interactive fiction desktop app with a fast narrator loop and file-native background agents."
+    />
+    <title>openovel</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="openovel home">
+        <img src="./assets/logo-mark.png" alt="" />
+        <span>openovel</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#preview">Preview</a>
+        <a href="#why">Why</a>
+        <a href="#architecture">How it works</a>
+        <a href="#download">Download</a>
+        <a href="./app/">Online</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <img class="hero-image" src="./assets/hero.webp" alt="Openovel artwork" />
+        <div class="hero-copy">
+          <p class="eyebrow">Local-first AI interactive fiction</p>
+          <h1 id="hero-title">openovel</h1>
+          <p>
+            Type what the protagonist does. A fast foreground narrator streams
+            the next beat while slower background agents maintain ordinary
+            Markdown and JSON story files.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button primary" href="./app/">Try online version</a>
+            <a class="button" href="https://github.com/Feed-Scription/openovel/releases">Download local client</a>
+          </div>
+          <p class="hero-note">
+            The online version is a browser preview. The desktop app is the
+            maintained full runtime for local files, imports, exports, provider
+            calls, and resident background agents.
+          </p>
+        </div>
+      </section>
+
+      <section class="download-band" id="download" aria-labelledby="download-title">
+        <div>
+          <p class="eyebrow">Desktop beta</p>
+          <h2 id="download-title">Install the local client for the full runtime</h2>
+        </div>
+        <div class="download-actions">
+          <a class="button primary" href="https://github.com/Feed-Scription/openovel/releases">GitHub Releases</a>
+          <a class="button" href="https://github.com/Feed-Scription/openovel">Source code</a>
+        </div>
+      </section>
+
+      <section class="section preview" id="preview" aria-labelledby="preview-title">
+        <div class="section-head">
+          <p class="eyebrow">Preview</p>
+          <h2 id="preview-title">A real session in the Electron app</h2>
+        </div>
+        <img class="screenshot" src="./assets/screenshot.webp" alt="openovel Electron app showing an interactive fiction session" />
+      </section>
+
+      <section class="section cards" id="why" aria-labelledby="why-title">
+        <div class="section-head">
+          <p class="eyebrow">Why openovel</p>
+          <h2 id="why-title">Fast reading loop, durable story memory</h2>
+        </div>
+        <div class="card-grid">
+          <article>
+            <h3>Foreground narrator</h3>
+            <p>A latency-sensitive model call focuses on prose and the next meaningful beat.</p>
+          </article>
+          <article>
+            <h3>Background agents</h3>
+            <p>Resident agents update world state, pacing, cards, memory, and guidance after turns.</p>
+          </article>
+          <article>
+            <h3>File-native stories</h3>
+            <p>Canon, notes, context, state, and memory are inspectable files, not a hidden database.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section architecture" id="architecture" aria-labelledby="architecture-title">
+        <div class="section-head">
+          <p class="eyebrow">How it works</p>
+          <h2 id="architecture-title">A dual-loop runtime for long-running fiction</h2>
+          <p>
+            The foreground loop gets the reader prose quickly. The background
+            loop records consequences and prepares better context for future turns.
+          </p>
+        </div>
+        <img src="./assets/architecture.svg" alt="openovel dual-loop architecture diagram" />
+      </section>
+
+      <section class="section features" aria-labelledby="features-title">
+        <div class="section-head">
+          <p class="eyebrow">Features</p>
+          <h2 id="features-title">Built for playable stories that keep going</h2>
+        </div>
+        <ul>
+          <li>Desktop story library with create, rename, import, restart, delete, and export.</li>
+          <li>Suggested choices that remain optional; readers can type anything free-form.</li>
+          <li>Reading-paced reveal independent of provider stream speed.</li>
+          <li>Optional rich rendering, scene backdrops, image generation, TTS, and comic mode.</li>
+          <li>Settings for built-in and OpenAI-compatible providers.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <span>Apache-2.0</span>
+      <a href="https://github.com/Feed-Scription/openovel/blob/main/README.md">README</a>
+      <a href="https://github.com/Feed-Scription/openovel/blob/main/README.zh-CN.md">中文 README</a>
+      <a href="https://github.com/Feed-Scription/openovel/issues">Issues</a>
+    </footer>
+  </body>
+</html>
