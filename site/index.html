@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
+      data-i18n-meta="meta.description"
       content="openovel is a local-first AI interactive fiction desktop app with a fast narrator loop and file-native background agents."
     />
     <title>openovel</title>
@@ -16,31 +17,37 @@
         <img src="./assets/logo-mark.png" alt="" />
         <span>openovel</span>
       </a>
-      <nav aria-label="Primary navigation">
-        <a href="#preview">Preview</a>
-        <a href="#why">Why</a>
-        <a href="#architecture">How it works</a>
-        <a href="#download">Download</a>
-        <a href="./app/">Online</a>
-      </nav>
+      <div class="topbar-end">
+        <nav aria-label="Primary navigation">
+          <a href="#preview" data-i18n="nav.preview">Preview</a>
+          <a href="#why" data-i18n="nav.why">Why</a>
+          <a href="#architecture" data-i18n="nav.how">How it works</a>
+          <a href="#download" data-i18n="nav.download">Download</a>
+          <a href="./app/" data-i18n="nav.online">Online</a>
+        </nav>
+        <div class="lang-switch" role="group" aria-label="Language / 语言">
+          <button type="button" data-lang="en" class="is-active" aria-pressed="true">EN</button>
+          <button type="button" data-lang="zh" aria-pressed="false">中文</button>
+        </div>
+      </div>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <img class="hero-image" src="./assets/hero.webp" alt="Openovel artwork" />
+        <img class="hero-image" src="./assets/hero.webp" alt="" data-i18n-alt="hero.imageAlt" />
         <div class="hero-copy">
-          <p class="eyebrow">Local-first AI interactive fiction</p>
+          <p class="eyebrow" data-i18n="hero.eyebrow">Local-first AI interactive fiction</p>
           <h1 id="hero-title">openovel</h1>
-          <p>
+          <p data-i18n="hero.desc">
             Type what the protagonist does. A fast foreground narrator streams
             the next beat while slower background agents maintain ordinary
             Markdown and JSON story files.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="./app/">Try online version</a>
-            <a class="button" href="https://github.com/Feed-Scription/openovel/releases">Download local client</a>
+            <a class="button primary" href="./app/" data-i18n="hero.tryOnline">Try online version</a>
+            <a class="button" href="https://github.com/Feed-Scription/openovel/releases" data-i18n="hero.download">Download local client</a>
           </div>
-          <p class="hero-note">
+          <p class="hero-note" data-i18n="hero.note">
             The online version is a browser preview. The desktop app is the
             maintained full runtime for local files, imports, exports, provider
             calls, and resident background agents.
@@ -50,76 +57,233 @@
 
       <section class="download-band" id="download" aria-labelledby="download-title">
         <div>
-          <p class="eyebrow">Desktop beta</p>
-          <h2 id="download-title">Install the local client for the full runtime</h2>
+          <p class="eyebrow" data-i18n="download.eyebrow">Desktop beta</p>
+          <h2 id="download-title" data-i18n="download.title">Install the local client for the full runtime</h2>
         </div>
         <div class="download-actions">
-          <a class="button primary" href="https://github.com/Feed-Scription/openovel/releases">GitHub Releases</a>
-          <a class="button" href="https://github.com/Feed-Scription/openovel">Source code</a>
+          <a class="button primary" href="https://github.com/Feed-Scription/openovel/releases" data-i18n="download.releases">GitHub Releases</a>
+          <a class="button" href="https://github.com/Feed-Scription/openovel" data-i18n="download.source">Source code</a>
         </div>
       </section>
 
       <section class="section preview" id="preview" aria-labelledby="preview-title">
         <div class="section-head">
-          <p class="eyebrow">Preview</p>
-          <h2 id="preview-title">A real session in the Electron app</h2>
+          <p class="eyebrow" data-i18n="preview.eyebrow">Preview</p>
+          <h2 id="preview-title" data-i18n="preview.title">A real session in the Electron app</h2>
         </div>
-        <img class="screenshot" src="./assets/screenshot.webp" alt="openovel Electron app showing an interactive fiction session" />
+        <img class="screenshot" src="./assets/screenshot.webp" alt="openovel Electron app showing an interactive fiction session" data-i18n-alt="preview.imageAlt" />
       </section>
 
       <section class="section cards" id="why" aria-labelledby="why-title">
         <div class="section-head">
-          <p class="eyebrow">Why openovel</p>
-          <h2 id="why-title">Fast reading loop, durable story memory</h2>
+          <p class="eyebrow" data-i18n="why.eyebrow">Why openovel</p>
+          <h2 id="why-title" data-i18n="why.title">Fast reading loop, durable story memory</h2>
         </div>
         <div class="card-grid">
           <article>
-            <h3>Foreground narrator</h3>
-            <p>A latency-sensitive model call focuses on prose and the next meaningful beat.</p>
+            <h3 data-i18n="why.card1.title">Foreground narrator</h3>
+            <p data-i18n="why.card1.desc">A latency-sensitive model call focuses on prose and the next meaningful beat.</p>
           </article>
           <article>
-            <h3>Background agents</h3>
-            <p>Resident agents update world state, pacing, cards, memory, and guidance after turns.</p>
+            <h3 data-i18n="why.card2.title">Background agents</h3>
+            <p data-i18n="why.card2.desc">Resident agents update world state, pacing, cards, memory, and guidance after turns.</p>
           </article>
           <article>
-            <h3>File-native stories</h3>
-            <p>Canon, notes, context, state, and memory are inspectable files, not a hidden database.</p>
+            <h3 data-i18n="why.card3.title">File-native stories</h3>
+            <p data-i18n="why.card3.desc">Canon, notes, context, state, and memory are inspectable files, not a hidden database.</p>
           </article>
         </div>
       </section>
 
       <section class="section architecture" id="architecture" aria-labelledby="architecture-title">
         <div class="section-head">
-          <p class="eyebrow">How it works</p>
-          <h2 id="architecture-title">A dual-loop runtime for long-running fiction</h2>
-          <p>
+          <p class="eyebrow" data-i18n="arch.eyebrow">How it works</p>
+          <h2 id="architecture-title" data-i18n="arch.title">A dual-loop runtime for long-running fiction</h2>
+          <p data-i18n="arch.desc">
             The foreground loop gets the reader prose quickly. The background
             loop records consequences and prepares better context for future turns.
           </p>
         </div>
-        <img src="./assets/architecture.svg" alt="openovel dual-loop architecture diagram" />
+        <img id="arch-image" src="./assets/architecture.svg" alt="openovel dual-loop architecture diagram" data-i18n-alt="arch.imageAlt" />
       </section>
 
       <section class="section features" aria-labelledby="features-title">
         <div class="section-head">
-          <p class="eyebrow">Features</p>
-          <h2 id="features-title">Built for playable stories that keep going</h2>
+          <p class="eyebrow" data-i18n="features.eyebrow">Features</p>
+          <h2 id="features-title" data-i18n="features.title">Built for playable stories that keep going</h2>
         </div>
         <ul>
-          <li>Desktop story library with create, rename, import, restart, delete, and export.</li>
-          <li>Suggested choices that remain optional; readers can type anything free-form.</li>
-          <li>Reading-paced reveal independent of provider stream speed.</li>
-          <li>Optional rich rendering, scene backdrops, image generation, TTS, and comic mode.</li>
-          <li>Settings for built-in and OpenAI-compatible providers.</li>
+          <li data-i18n="features.item1">Desktop story library with create, rename, import, restart, delete, and export.</li>
+          <li data-i18n="features.item2">Suggested choices that remain optional; readers can type anything free-form.</li>
+          <li data-i18n="features.item3">Reading-paced reveal independent of provider stream speed.</li>
+          <li data-i18n="features.item4">Optional rich rendering, scene backdrops, image generation, TTS, and comic mode.</li>
+          <li data-i18n="features.item5">Settings for built-in and OpenAI-compatible providers.</li>
         </ul>
       </section>
     </main>
 
     <footer>
       <span>Apache-2.0</span>
-      <a href="https://github.com/Feed-Scription/openovel/blob/main/README.md">README</a>
-      <a href="https://github.com/Feed-Scription/openovel/blob/main/README.zh-CN.md">中文 README</a>
-      <a href="https://github.com/Feed-Scription/openovel/issues">Issues</a>
+      <a href="https://github.com/Feed-Scription/openovel/blob/main/README.md" data-i18n="footer.readme">README</a>
+      <a href="https://github.com/Feed-Scription/openovel/blob/main/README.zh-CN.md" data-i18n="footer.readmeZh">中文 README</a>
+      <a href="https://github.com/Feed-Scription/openovel/issues" data-i18n="footer.issues">Issues</a>
     </footer>
+
+    <script>
+      (function () {
+        var I18N = {
+          en: {
+            "meta.description":
+              "openovel is a local-first AI interactive fiction desktop app with a fast narrator loop and file-native background agents.",
+            "nav.preview": "Preview",
+            "nav.why": "Why",
+            "nav.how": "How it works",
+            "nav.download": "Download",
+            "nav.online": "Online",
+            "hero.eyebrow": "Local-first AI interactive fiction",
+            "hero.imageAlt": "openovel artwork",
+            "hero.desc":
+              "Type what the protagonist does. A fast foreground narrator streams the next beat while slower background agents maintain ordinary Markdown and JSON story files.",
+            "hero.tryOnline": "Try online version",
+            "hero.download": "Download local client",
+            "hero.note":
+              "The online version is a browser preview. The desktop app is the maintained full runtime for local files, imports, exports, provider calls, and resident background agents.",
+            "download.eyebrow": "Desktop beta",
+            "download.title": "Install the local client for the full runtime",
+            "download.releases": "GitHub Releases",
+            "download.source": "Source code",
+            "preview.eyebrow": "Preview",
+            "preview.title": "A real session in the Electron app",
+            "preview.imageAlt": "openovel Electron app showing an interactive fiction session",
+            "why.eyebrow": "Why openovel",
+            "why.title": "Fast reading loop, durable story memory",
+            "why.card1.title": "Foreground narrator",
+            "why.card1.desc": "A latency-sensitive model call focuses on prose and the next meaningful beat.",
+            "why.card2.title": "Background agents",
+            "why.card2.desc": "Resident agents update world state, pacing, cards, memory, and guidance after turns.",
+            "why.card3.title": "File-native stories",
+            "why.card3.desc": "Canon, notes, context, state, and memory are inspectable files, not a hidden database.",
+            "arch.eyebrow": "How it works",
+            "arch.title": "A dual-loop runtime for long-running fiction",
+            "arch.desc":
+              "The foreground loop gets the reader prose quickly. The background loop records consequences and prepares better context for future turns.",
+            "arch.imageAlt": "openovel dual-loop architecture diagram",
+            "features.eyebrow": "Features",
+            "features.title": "Built for playable stories that keep going",
+            "features.item1": "Desktop story library with create, rename, import, restart, delete, and export.",
+            "features.item2": "Suggested choices that remain optional; readers can type anything free-form.",
+            "features.item3": "Reading-paced reveal independent of provider stream speed.",
+            "features.item4": "Optional rich rendering, scene backdrops, image generation, TTS, and comic mode.",
+            "features.item5": "Settings for built-in and OpenAI-compatible providers.",
+            "footer.readme": "README",
+            "footer.readmeZh": "中文 README",
+            "footer.issues": "Issues"
+          },
+          zh: {
+            "meta.description":
+              "openovel 是一个本地优先的 AI 互动小说桌面应用：前台叙述器快速服务读者，后台 Agent 以普通文件维护故事状态。",
+            "nav.preview": "预览",
+            "nav.why": "为什么",
+            "nav.how": "工作原理",
+            "nav.download": "下载",
+            "nav.online": "在线",
+            "hero.eyebrow": "本地优先的 AI 互动小说",
+            "hero.imageAlt": "openovel 主视觉",
+            "hero.desc":
+              "你输入主角要做什么；前台叙述器流式写出下一拍，更慢的后台 Agent 则维护普通的 Markdown 与 JSON 故事文件。",
+            "hero.tryOnline": "试用在线版",
+            "hero.download": "下载本地客户端",
+            "hero.note":
+              "在线版只是浏览器预览。桌面应用才是持续维护的完整运行时，支持本地文件、导入导出、provider 调用与常驻后台 Agent。",
+            "download.eyebrow": "桌面 Beta",
+            "download.title": "安装本地客户端，获得完整运行时",
+            "download.releases": "GitHub Releases",
+            "download.source": "源代码",
+            "preview.eyebrow": "界面预览",
+            "preview.title": "Electron 应用里的真实运行",
+            "preview.imageAlt": "openovel Electron 应用运行互动小说场景的截图",
+            "why.eyebrow": "为什么是 openovel",
+            "why.title": "快速的阅读循环，持久的故事记忆",
+            "why.card1.title": "前台叙述器",
+            "why.card1.desc": "一个对延迟敏感的模型调用，只专注于正文与下一个有意义的节拍。",
+            "why.card2.title": "后台 Agent",
+            "why.card2.desc": "常驻 Agent 在每个回合后更新世界状态、节奏、context cards、记忆与 guidance。",
+            "why.card3.title": "文件原生故事",
+            "why.card3.desc": "canon、笔记、上下文、状态与记忆都是可检视的文件，而不是藏起来的数据库。",
+            "arch.eyebrow": "工作原理",
+            "arch.title": "为长篇互动小说设计的双循环运行时",
+            "arch.desc":
+              "前台循环让读者尽快读到正文；后台循环记录后果，并为之后的回合准备更好的上下文。",
+            "arch.imageAlt": "openovel 双循环架构示意图",
+            "features.eyebrow": "功能特性",
+            "features.title": "为能一直玩下去的故事而设计",
+            "features.item1": "桌面故事库：创建、重命名、导入、重开、删除与导出。",
+            "features.item2": "建议选项始终可选；读者随时可以自由输入任何动作。",
+            "features.item3": "按阅读节奏展开正文，独立于 provider 的流式速度。",
+            "features.item4": "可选的富渲染、场景背景、图像生成、朗读（TTS）与漫画模式。",
+            "features.item5": "支持内置 provider 与 OpenAI 兼容端点的设置。",
+            "footer.readme": "README",
+            "footer.readmeZh": "中文 README",
+            "footer.issues": "问题反馈"
+          }
+        };
+
+        var ARCH_SRC = {
+          en: "./assets/architecture.svg",
+          zh: "./assets/architecture.zh-CN.svg"
+        };
+
+        var root = document.documentElement;
+        var buttons = Array.prototype.slice.call(document.querySelectorAll(".lang-switch button"));
+        var archImage = document.getElementById("arch-image");
+
+        function applyLang(lang) {
+          if (lang !== "zh") lang = "en";
+          var dict = I18N[lang];
+
+          root.lang = lang === "zh" ? "zh-CN" : "en";
+          root.classList.toggle("lang-zh", lang === "zh");
+
+          document.querySelectorAll("[data-i18n]").forEach(function (el) {
+            var v = dict[el.getAttribute("data-i18n")];
+            if (v != null) el.textContent = v;
+          });
+          document.querySelectorAll("[data-i18n-alt]").forEach(function (el) {
+            var v = dict[el.getAttribute("data-i18n-alt")];
+            if (v != null) el.setAttribute("alt", v);
+          });
+          document.querySelectorAll("[data-i18n-meta]").forEach(function (el) {
+            var v = dict[el.getAttribute("data-i18n-meta")];
+            if (v != null) el.setAttribute("content", v);
+          });
+          if (archImage && ARCH_SRC[lang]) archImage.src = ARCH_SRC[lang];
+
+          buttons.forEach(function (b) {
+            var on = b.getAttribute("data-lang") === lang;
+            b.classList.toggle("is-active", on);
+            b.setAttribute("aria-pressed", on ? "true" : "false");
+          });
+
+          try {
+            localStorage.setItem("openovel.lang", lang);
+          } catch (e) {}
+        }
+
+        var saved = null;
+        try {
+          saved = localStorage.getItem("openovel.lang");
+        } catch (e) {}
+        var initial =
+          saved || ((navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en");
+
+        buttons.forEach(function (b) {
+          b.addEventListener("click", function () {
+            applyLang(b.getAttribute("data-lang"));
+          });
+        });
+
+        applyLang(initial);
+      })();
+    </script>
   </body>
 </html>
