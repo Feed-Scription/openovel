@@ -9549,6 +9549,40 @@ function revealUnitDelayMs(kind, unitText, pacing) {
   }
   return floor;
 }
+function insideRichFence(prefix) {
+  const re4 = /```([^\n`]*)/g;
+  let inFence = false;
+  let isOvl = false;
+  let m;
+  while (m = re4.exec(prefix)) {
+    if (!inFence) {
+      inFence = true;
+      isOvl = /^\s*ovl:/i.test(m[1]);
+    } else {
+      inFence = false;
+      isOvl = false;
+    }
+  }
+  return inFence && isOvl;
+}
+function richFenceSkipEnd(text, from) {
+  const s = String(text || "");
+  if (from >= s.length) return from;
+  const pastClose = (searchFrom) => {
+    const close = s.indexOf("```", searchFrom);
+    if (close < 0) return s.length;
+    let end = close + 3;
+    if (s[end] === "\r") end += 1;
+    if (s[end] === "\n") end += 1;
+    return end;
+  };
+  if (insideRichFence(s.slice(0, from))) return pastClose(from);
+  const lineStart = s.lastIndexOf("\n", from - 1) + 1;
+  const lineEndIdx = s.indexOf("\n", lineStart);
+  const line = s.slice(lineStart, lineEndIdx < 0 ? s.length : lineEndIdx);
+  if (/^```\s*ovl:/i.test(line)) return pastClose(lineStart + 3);
+  return from;
+}
 
 // src/electron/renderer/lib/CodeView.jsx
 var import_react33 = __toESM(require_react(), 1);
@@ -50210,10 +50244,11 @@ function parseOptions(text) {
 }
 function appendRecentCanon(prev, action, narration, maxChars = 6e3) {
   const cleanedNarration = String(narration || "").replace(/```ovl:[a-z-]*[^\n]*\n[\s\S]*?```/gi, "").replace(/\n{3,}/g, "\n\n").trim();
-  const block = `### \u8BFB\u8005\u9009\u62E9
-${String(action || "").trim()}
+  const actionText = String(action || "").trim();
+  const block = actionText ? `### \u8BFB\u8005\u9009\u62E9
+${actionText}
 
-${cleanedNarration}`;
+${cleanedNarration}` : cleanedNarration;
   const joined = [String(prev || "").trim(), block].filter(Boolean).join("\n\n");
   if (joined.length <= maxChars) return joined;
   const tail = joined.slice(joined.length - maxChars);
@@ -50230,6 +50265,10 @@ function buildOpeningEntryText({ prelude, hudInitial, openingBackdrop }) {
     parts.push(["```ovl:bg", `set: ${String(openingBackdrop).trim()}`, "```"].join("\n"));
   }
   return parts.join("\n\n");
+}
+function openingTriggerAction(locale = "en") {
+  const zh = String(locale || "").startsWith("zh") || /[㐀-鿿]/.test(String(locale || ""));
+  return zh ? "\uFF08\u5F00\u59CB\u6545\u4E8B\u3002\u6839\u636E Foreground Guidance \u7684\u5F00\u573A\u60C5\u5883\uFF0C\u5199\u51FA\u771F\u6B63\u7684\u5F00\u573A\u573A\u666F\u3002\uFF09" : "(Begin the story. Use the opening situation in the Foreground Guidance to compose the opening scene.)";
 }
 
 // src/electron/renderer/webOpenovelBridge.js
@@ -50323,6 +50362,12 @@ function writeJson(key, value) {
 function makeEntry(type, text, extra = {}) {
   return { id: `${type}-${Date.now()}-${Math.random().toString(36).slice(2)}`, type, text, complete: true, at: nowIso(), ...extra };
 }
+function makePacing(cpm) {
+  const n = Number(cpm);
+  if (Number.isFinite(n) && n <= 0) return { enabled: false, cpm: 720, frameMs: 33, punctuation: true };
+  const c = Number.isFinite(n) && n > 0 ? Math.min(2400, Math.max(120, Math.round(n))) : 720;
+  return { enabled: true, cpm: c, frameMs: 33, punctuation: true };
+}
 function desktopRequired(feature) {
   return { ok: false, error: `${feature} requires the openovel desktop app \u2014 download it from the Releases page.` };
 }
@@ -50397,7 +50442,7 @@ function installWebOpenovelBridge() {
     status: "web demo ready",
     busy: false,
     currentStory: null,
-    pacing: { cpm: prefs.narrationCpm || 720, charsPerTick: 2, tickMs: 25 },
+    pacing: makePacing(prefs.narrationCpm),
     jobs: [],
     activeTools: [],
     storyTree: [],
@@ -50427,6 +50472,97 @@ function installWebOpenovelBridge() {
   const patchState = (patch) => {
     state = { ...state, ...patch };
     emitState();
+  };
+  const createRevealer = (pendingId) => {
+    let target = "";
+    let done = false;
+    let timer = null;
+    let resolveFinish;
+    const finished = new Promise((r) => {
+      resolveFinish = r;
+    });
+    const currentText = () => {
+      const e2 = state.entries.find((x) => x.id === pendingId);
+      return e2 ? e2.text : "";
+    };
+    const setText = (text, complete = false) => {
+      const entries = state.entries.map(
+        (e2) => e2.id === pendingId ? { ...e2, text, complete, pending: !complete && !String(text || "").length } : e2
+      );
+      state = { ...state, entries, liveStream: state.liveStream ? { ...state.liveStream, chars: text.length } : state.liveStream };
+      emitState();
+    };
+    const finishIfReady = () => {
+      if (done && currentText().length >= target.length) {
+        if (timer) clearTimeout(timer);
+        timer = null;
+        setText(target, true);
+        resolveFinish();
+        return true;
+      }
+      return false;
+    };
+    const tick = () => {
+      timer = null;
+      const pacing = state.pacing || {};
+      const text = currentText();
+      if (!pacing.enabled) {
+        if (text.length < target.length) setText(target);
+        finishIfReady();
+        return;
+      }
+      if (text.length < target.length) {
+        if (target.includes("```ovl:")) {
+          const skipTo = richFenceSkipEnd(target, text.length);
+          if (skipTo > text.length) {
+            setText(target.slice(0, skipTo));
+            timer = setTimeout(tick, pacing.frameMs);
+            return;
+          }
+        }
+        const unit = nextRevealUnit(target, text.length);
+        const next = Math.min(target.length, unit.end);
+        const unitText = target.slice(text.length, next);
+        setText(target.slice(0, next));
+        const lastChar = target[next - 1] || "";
+        const delay = revealUnitDelayMs(unit.kind, unitText, pacing) + (pacing.punctuation ? punctuationDelayMs(lastChar) : 0);
+        timer = setTimeout(tick, delay);
+        return;
+      }
+      if (!finishIfReady()) timer = setTimeout(tick, pacing.frameMs);
+    };
+    const schedule = () => {
+      if (!timer && !finishIfReady()) timer = setTimeout(tick, 0);
+    };
+    return {
+      push: (chunk) => {
+        const t3 = String(chunk || "");
+        if (!t3) return;
+        target += t3;
+        if (!(state.pacing && state.pacing.enabled)) {
+          setText(target);
+          return;
+        }
+        schedule();
+      },
+      complete: (finalText) => {
+        target = String(finalText == null ? target : finalText);
+        done = true;
+        if (!(state.pacing && state.pacing.enabled)) {
+          setText(target, true);
+          resolveFinish();
+          return;
+        }
+        schedule();
+      },
+      finish: () => finished,
+      abort: () => {
+        done = true;
+        if (timer) clearTimeout(timer);
+        timer = null;
+        resolveFinish();
+      }
+    };
   };
   const buildSelector = () => {
     const books = storyIndex.map((s) => ({
@@ -50480,11 +50616,12 @@ function installWebOpenovelBridge() {
     currentStoryData = story;
     recentCanon = "";
     globalThis.__OPENOVEL_WEB_ASSET_BASE__ = `${STORIES_BASE}${id2}/`;
-    const opening = buildOpeningEntryText({
-      prelude: story.prelude,
-      hudInitial: story.hudInitial,
-      openingBackdrop: story.openingBackdrop
-    });
+    const hasKey = !!resolveCall().apiKey;
+    let entries = [];
+    if (!hasKey) {
+      const seeded = buildOpeningEntryText({ prelude: story.prelude, hudInitial: story.hudInitial, openingBackdrop: story.openingBackdrop });
+      entries = seeded ? [makeEntry("narration", seeded)] : [];
+    }
     patchState({
       mode: "idle",
       booting: false,
@@ -50493,13 +50630,16 @@ function installWebOpenovelBridge() {
       currentStory: { id: id2, displayName: story.displayName, root: "", isProjectLocal: false, mode: "" },
       formatContract: story.formatContract || null,
       foregroundGuidance: story.foreground || "",
-      entries: opening ? [makeEntry("narration", opening)] : [],
+      entries,
       options: [],
       turnCount: 0,
       status: "ready",
       lastError: null,
       liveStream: null
     });
+    if (hasKey) {
+      void runNarrationTurn({ action: openingTriggerAction(prefs.locale), suppressUserEntry: true });
+    }
     return { ok: true };
   };
   const goToLibrary = () => {
@@ -50532,7 +50672,7 @@ function installWebOpenovelBridge() {
     const zh = String(prefs.locale || "").startsWith("zh");
     return zh ? "\u8BF7\u5728\u8BBE\u7F6E\uFF08\u53F3\u4E0A\u89D2\u9F7F\u8F6E\uFF09\u2192 API Keys \u586B\u5165\u4F60\u81EA\u5DF1\u7684 key \u624D\u80FD\u6E38\u73A9\u3002\u6D4F\u89C8\u5668\u5185\u63A8\u8350 OpenRouter \u6216 Anthropic\u3002" : "Add your own API key in Settings (gear, top-right) \u2192 API Keys to play. OpenRouter or Anthropic work in the browser.";
   };
-  const generateOptions = async (action, narration) => {
+  const generateOptions = async (action, narration, turnAtRequest) => {
     const call = resolveCall();
     if (!call.apiKey || !currentStoryData) return;
     try {
@@ -50554,38 +50694,24 @@ function installWebOpenovelBridge() {
         }
       });
       const options = parseOptions(text);
-      if (options.length && !state.busy) patchState({ options });
+      if (options.length && state.turnCount === turnAtRequest) patchState({ options });
     } catch {
     }
   };
-  const submitReaderText = async (raw = state.input) => {
-    if (state.busy || !currentStoryData) return { ok: true };
-    const sanitized = sanitizeReaderAction(raw, prefs.locale);
-    if (!sanitized.ok) {
-      patchState({ status: sanitized.error, input: raw });
-      return { ok: false, error: sanitized.error };
-    }
-    const action = sanitized.text;
+  const runNarrationTurn = async ({ action, suppressUserEntry = false }) => {
     const call = resolveCall();
-    if (!call.apiKey) {
-      const msg = keyNeededMessage();
-      patchState({
-        input: "",
-        entries: [...state.entries, makeEntry("user", action), makeEntry("narration", msg, { systemNote: true })],
-        status: msg
-      });
-      return { ok: false, error: "missing-key" };
-    }
     const turn = (state.turnCount || 0) + 1;
-    const userEntry = makeEntry("user", action);
+    const nextEntries = [...state.entries];
+    if (!suppressUserEntry) nextEntries.push(makeEntry("user", action));
     const pending = makeEntry("narration", "", { complete: false, pending: true });
+    nextEntries.push(pending);
     patchState({
       input: "",
       busy: true,
       mode: "busy",
       status: "narrator is writing",
       turnCount: turn,
-      entries: [...state.entries, userEntry, pending],
+      entries: nextEntries,
       options: [],
       liveStream: { source: "Web narrator", chars: 0, startedAt: Date.now() }
     });
@@ -50596,16 +50722,8 @@ function installWebOpenovelBridge() {
       recentCanon,
       action
     });
+    const revealer = createRevealer(pending.id);
     let acc = "";
-    const updatePending = () => {
-      const entries2 = state.entries.slice();
-      const last2 = entries2[entries2.length - 1];
-      if (last2 && last2.id === pending.id) {
-        entries2[entries2.length - 1] = { ...last2, text: acc };
-        state = { ...state, entries: entries2, liveStream: { ...state.liveStream || {}, chars: acc.length } };
-        emitState();
-      }
-    };
     try {
       await streamChat({
         provider: call.provider,
@@ -50617,28 +50735,25 @@ function installWebOpenovelBridge() {
         messages,
         onDelta: (delta) => {
           acc += delta;
-          updatePending();
+          revealer.push(delta);
         }
       });
     } catch (err) {
+      revealer.abort();
       const message = err?.message || "narration failed";
-      const entries2 = state.entries.slice();
-      const last2 = entries2[entries2.length - 1];
-      if (last2 && last2.id === pending.id) {
-        entries2[entries2.length - 1] = { ...last2, text: acc || `\u26A0\uFE0F ${message}`, complete: true, pending: false, error: true };
-      }
-      patchState({ entries: entries2, busy: false, mode: "idle", status: message, liveStream: null, lastError: { scope: "narration", message } });
+      const shown = normalizeOvlFences(acc).text.trim();
+      const entries = state.entries.map(
+        (e2) => e2.id === pending.id ? { ...e2, text: shown || `\u26A0\uFE0F ${message}`, complete: true, pending: false, error: !shown } : e2
+      );
+      patchState({ entries, busy: false, mode: "idle", status: message, liveStream: null, lastError: { scope: "narration", message } });
       return { ok: false, error: message };
     }
-    const finalText = normalizeOvlFences(acc).trim() || "\u2026";
-    const entries = state.entries.slice();
-    const last = entries[entries.length - 1];
-    if (last && last.id === pending.id) {
-      entries[entries.length - 1] = { ...last, text: finalText, complete: true, pending: false };
-    }
-    recentCanon = appendRecentCanon(recentCanon, action, finalText);
+    const prose = normalizeOvlFences(acc).text.trim() || "\u2026";
+    recentCanon = appendRecentCanon(recentCanon, suppressUserEntry ? "" : action, prose);
+    if (state.optionsEnabled) generateOptions(suppressUserEntry ? "" : action, prose, turn);
+    revealer.complete(prose);
+    await revealer.finish();
     patchState({
-      entries,
       busy: false,
       mode: "idle",
       status: "ready",
@@ -50646,7 +50761,7 @@ function installWebOpenovelBridge() {
       aggregate: {
         ...state.aggregate,
         modelCalls: state.aggregate.modelCalls + 1,
-        charactersStreamed: state.aggregate.charactersStreamed + finalText.length
+        charactersStreamed: state.aggregate.charactersStreamed + prose.length
       },
       activity: [
         { id: `turn-${turn}`, at: Date.now(), source: "Web narrator", label: `Narrated turn ${turn}`, status: "done", meta: {} },
@@ -50654,8 +50769,26 @@ function installWebOpenovelBridge() {
       ].slice(0, 24)
     });
     emitBus("foreground.turn.completed", { turn });
-    if (state.optionsEnabled) generateOptions(action, finalText);
     return { ok: true };
+  };
+  const submitReaderText = async (raw = state.input) => {
+    if (state.busy || !currentStoryData) return { ok: true };
+    const sanitized = sanitizeReaderAction(raw, prefs.locale);
+    if (!sanitized.ok) {
+      patchState({ status: sanitized.error, input: raw });
+      return { ok: false, error: sanitized.error };
+    }
+    const action = sanitized.text;
+    if (!resolveCall().apiKey) {
+      const msg = keyNeededMessage();
+      patchState({
+        input: "",
+        entries: [...state.entries, makeEntry("user", action), makeEntry("narration", msg, { systemNote: true })],
+        status: msg
+      });
+      return { ok: false, error: "missing-key" };
+    }
+    return runNarrationTurn({ action, suppressUserEntry: false });
   };
   const finishOnboarding = () => {
     try {
@@ -50741,9 +50874,18 @@ function installWebOpenovelBridge() {
           if (state.mode === "onboarding") return advanceOnboardingFromInput();
           return submitReaderText();
         }
-        case "setNarrationCpm":
-          patchState({ pacing: { ...state.pacing, cpm: Number(args[0]) || 0 } });
+        case "setNarrationCpm": {
+          const n = Number(args[0]);
+          if (!Number.isFinite(n)) return { ok: true };
+          const cur2 = state.pacing || {};
+          if (n <= 0) {
+            if (cur2.enabled !== false) patchState({ pacing: { ...cur2, enabled: false } });
+            return { ok: true };
+          }
+          const next = Math.min(2400, Math.max(120, Math.round(n)));
+          if (!(cur2.cpm === next && cur2.enabled !== false)) patchState({ pacing: { ...cur2, enabled: true, cpm: next } });
           return { ok: true };
+        }
         case "goToLibrary":
           goToLibrary();
           return { ok: true };
