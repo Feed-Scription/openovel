@@ -1,8 +1,9 @@
 /* openovel landing page — styled to match the desktop app's reading theme
    (Zen UI / Kindle Paperwhite): neutral near-white paper, warm near-black ink,
-   a single restrained blue accent, big bold-serif headings, mixed-case sans
-   chrome with no all-caps tracking, generous breathing room, minimal decoration.
-   Tokens, fonts, and radii mirror src/electron/renderer/styles/theme.css. */
+   one restrained blue accent, calm bold-serif headings, mixed-case sans chrome
+   with no all-caps tracking, comfortable type sizes, and minimal decoration.
+   Tokens, fonts, radii, and G2 corners mirror
+   src/electron/renderer/styles/theme.css. */
 :root {
   color-scheme: light;
 
@@ -22,7 +23,6 @@
 
   /* The app's one narrative accent: a muted dialogue blue. No gold/red. */
   --accent: #3a516b;
-  --accent-ink: #2c3f54;
 
   --shadow: 0 1px 0 rgba(0, 0, 0, 0.02), 0 22px 48px -28px rgba(0, 0, 0, 0.22);
   --shadow-sm: 0 1px 0 rgba(0, 0, 0, 0.02), 0 10px 28px -18px rgba(0, 0, 0, 0.18);
@@ -80,8 +80,8 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 64px;
-  padding: 12px clamp(20px, 5vw, 72px);
+  min-height: 60px;
+  padding: 11px clamp(20px, 5vw, 72px);
   border-bottom: 1px solid var(--rule-soft);
   background: rgba(244, 244, 244, 0.82);
   backdrop-filter: blur(16px);
@@ -97,19 +97,19 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: 10px;
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   letter-spacing: -0.01em;
 }
 .brand img {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-xs);
 }
 nav {
   display: flex;
   gap: 20px;
   color: var(--ink-soft);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 nav a {
   position: relative;
@@ -133,7 +133,7 @@ nav a:hover::after { transform: scaleX(1); }
 footer a { transition: color 0.2s var(--ease); }
 footer a:hover { color: var(--ink); }
 
-/* Language switch — segmented pill, mirroring the app's quiet chrome. */
+/* Language switch — segmented pill. */
 .lang-switch {
   display: inline-flex;
   padding: 3px;
@@ -145,12 +145,12 @@ footer a:hover { color: var(--ink); }
   appearance: none;
   border: 0;
   margin: 0;
-  padding: 5px 14px;
+  padding: 5px 13px;
   border-radius: var(--radius-pill);
   background: transparent;
   color: var(--ink-soft);
   font: inherit;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s var(--ease), color 0.2s var(--ease);
@@ -164,10 +164,10 @@ footer a:hover { color: var(--ink); }
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: calc(100svh - 64px);
+  min-height: min(calc(100svh - 60px), 680px);
   display: grid;
   align-items: end;
-  padding: 0 clamp(20px, 5vw, 72px) 64px;
+  padding: 48px clamp(20px, 5vw, 72px) 52px;
   overflow: hidden;
   border-bottom: 1px solid var(--rule-soft);
 }
@@ -176,8 +176,8 @@ footer a:hover { color: var(--ink); }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(244, 244, 244, 0.98), rgba(244, 244, 244, 0.62) 58%, rgba(244, 244, 244, 0.92)),
-    linear-gradient(0deg, var(--paper), rgba(244, 244, 244, 0.12) 54%);
+    linear-gradient(90deg, rgba(244, 244, 244, 0.99), rgba(244, 244, 244, 0.78) 60%, rgba(244, 244, 244, 0.96)),
+    linear-gradient(0deg, var(--paper), rgba(244, 244, 244, 0.3) 56%);
 }
 .hero-image {
   position: absolute;
@@ -185,25 +185,24 @@ footer a:hover { color: var(--ink); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.7;
+  opacity: 0.5;
 }
 .hero-copy {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  max-width: 680px;
   animation: rise 0.6s var(--ease) both;
 }
 @keyframes rise {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Eyebrow: mixed-case kicker in the accent — NOT all-caps tracked (the app
-   deliberately avoids tracked uppercase chrome). */
+/* Eyebrow: mixed-case kicker in the accent — NOT all-caps tracked. */
 .eyebrow {
   margin: 0 0 12px;
   color: var(--accent);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0;
   text-transform: none;
@@ -211,27 +210,27 @@ footer a:hover { color: var(--ink); }
 
 h1, h2, h3, p { margin-top: 0; }
 h1 {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: clamp(3.6rem, 13vw, 8rem);
-  line-height: 0.92;
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  line-height: 1;
   letter-spacing: -0.02em;
 }
 h2 {
   margin-bottom: 0;
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
-  line-height: 1.1;
-  letter-spacing: -0.015em;
+  font-size: clamp(1.45rem, 2.6vw, 2.05rem);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
 }
 h3 {
   margin-bottom: 8px;
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 1.18rem;
-  letter-spacing: -0.01em;
+  font-size: 1.08rem;
+  letter-spacing: -0.005em;
 }
 
 /* Reading voice: descriptive copy is set in the body serif, like the app's
@@ -240,13 +239,16 @@ h3 {
 .section-head p {
   font-family: var(--font-serif);
   color: var(--ink-mid);
-  line-height: 1.62;
+  line-height: 1.6;
 }
 .hero-copy p:not(.eyebrow) {
-  max-width: 660px;
-  font-size: clamp(1.12rem, 1.6vw, 1.32rem);
+  max-width: 560px;
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
 }
-.section-head p { font-size: 1.12rem; }
+.section-head p {
+  font-size: 1.05rem;
+  max-width: 640px;
+}
 
 .hero-actions,
 .download-actions {
@@ -254,17 +256,18 @@ h3 {
   flex-wrap: wrap;
   gap: 12px;
 }
-.hero-actions { margin-top: 30px; }
+.hero-actions { margin-top: 24px; }
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 0 20px;
+  min-height: 42px;
+  padding: 0 18px;
   border: 1px solid var(--rule);
   border-radius: var(--radius-xs);
   background: var(--sheet);
   color: var(--ink);
+  font-size: 0.92rem;
   font-weight: 600;
   transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease),
     background 0.18s var(--ease), border-color 0.18s var(--ease);
@@ -282,19 +285,19 @@ h3 {
 }
 .button.primary:hover { background: var(--ink-mid); border-color: var(--ink-mid); }
 .hero-note {
-  margin-top: 20px;
-  max-width: 680px;
+  margin-top: 18px;
+  max-width: 560px;
   color: var(--ink-soft);
-  font-size: 0.95rem !important;
-  line-height: 1.6;
+  font-size: 0.9rem !important;
+  line-height: 1.55;
 }
 
 /* ── Sections ────────────────────────────────────────────────────────────── */
 .download-band,
 .section {
-  padding: 96px clamp(20px, 5vw, 72px);
+  padding: 68px clamp(20px, 5vw, 72px);
   border-bottom: 1px solid var(--rule-soft);
-  scroll-margin-top: 80px;
+  scroll-margin-top: 72px;
 }
 .download-band {
   display: flex;
@@ -304,10 +307,10 @@ h3 {
   background: var(--sheet);
 }
 .section-head {
-  max-width: 880px;
-  margin-bottom: 40px;
+  max-width: 760px;
+  margin-bottom: 32px;
 }
-.section-head h2 + p { margin-top: 18px; }
+.section-head h2 + p { margin-top: 16px; }
 .features li {
   color: var(--ink-soft);
   line-height: 1.6;
@@ -317,7 +320,7 @@ h3 {
 .architecture img {
   display: block;
   width: 100%;
-  max-width: 1160px;
+  max-width: 1080px;
   height: auto;
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
@@ -331,14 +334,14 @@ h3 {
   gap: 16px;
 }
 .card-grid article {
-  min-height: 156px;
-  padding: 26px;
+  min-height: 140px;
+  padding: 24px;
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
   background: var(--sheet);
   transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
 }
-.card-grid p { color: var(--ink-soft); line-height: 1.6; }
+.card-grid p { color: var(--ink-soft); line-height: 1.58; }
 .card-grid article:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-sm);
@@ -349,8 +352,8 @@ h3 {
 
 .features ul {
   display: grid;
-  gap: 14px;
-  max-width: 880px;
+  gap: 13px;
+  max-width: 760px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -368,6 +371,7 @@ h3 {
   width: 6px;
   height: 6px;
   border-radius: var(--radius-pill);
+  corner-shape: round;
   background: var(--accent);
 }
 
@@ -377,9 +381,9 @@ footer {
   gap: 16px;
   align-items: center;
   justify-content: space-between;
-  padding: 30px clamp(20px, 5vw, 72px);
+  padding: 28px clamp(20px, 5vw, 72px);
   color: var(--ink-soft);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 @media (max-width: 780px) {
@@ -397,9 +401,9 @@ footer {
     overflow-x: auto;
     padding-bottom: 2px;
   }
-  .hero { min-height: 720px; }
+  .hero { min-height: 560px; }
   .download-band,
-  .section { padding: 64px clamp(20px, 5vw, 72px); }
+  .section { padding: 52px clamp(20px, 5vw, 72px); }
   .download-band {
     align-items: flex-start;
     flex-direction: column;
