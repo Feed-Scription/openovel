@@ -1,0 +1,16 @@
+{
+  "stories": [
+    {
+      "id": "smarter-than-codex-en",
+      "title": "Owen Novell: Smarter Than Codex?",
+      "lang": "en",
+      "cover": "smarter-than-codex-en/includes/cover.jpg"
+    },
+    {
+      "id": "smarter-than-codex-zh",
+      "title": "重生之你还有 Codex 聪明？",
+      "lang": "zh",
+      "cover": "smarter-than-codex-zh/includes/cover.jpg"
+    }
+  ]
+}
