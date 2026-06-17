@@ -1,13 +1,11 @@
 /* openovel landing page — styled to match the desktop app's reading theme
    (Zen UI / Kindle Paperwhite): neutral near-white paper, warm near-black ink,
-   one restrained blue accent, calm bold-serif headings, mixed-case sans chrome
-   with no all-caps tracking, comfortable type sizes, and minimal decoration.
-   Tokens, fonts, radii, and G2 corners mirror
-   src/electron/renderer/styles/theme.css. */
+   one restrained blue accent, calm serif headings, mixed-case sans chrome,
+   comfortable type sizes, and a centered content column. Tokens, fonts, radii,
+   and G2 corners mirror src/electron/renderer/styles/theme.css. */
 :root {
   color-scheme: light;
 
-  /* E-ink palette — neutral, no warm tint (matches the app). */
   --paper: #f4f4f4;
   --paper-soft: #ebebeb;
   --sheet: #ffffff;
@@ -21,7 +19,6 @@
   --rule: #bdbcb6;
   --rule-soft: #d4d3cc;
 
-  /* The app's one narrative accent: a muted dialogue blue. No gold/red. */
   --accent: #3a516b;
 
   --shadow: 0 1px 0 rgba(0, 0, 0, 0.02), 0 22px 48px -28px rgba(0, 0, 0, 0.22);
@@ -31,14 +28,16 @@
   --radius-sm: 10px;
   --radius-md: 12px;
   --radius-pill: 999px;
-  /* G2-continuous (squircle) corners, matching the app theme. Progressive
-     enhancement: browsers without `corner-shape` fall back to the radius. */
   --corner-shape-g2: superellipse(2);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Font stacks copied from the app theme so the page renders in the same
-     faces (with the same CJK fallbacks) on the same machine — no webfonts. */
+  /* Centered content column: every full-bleed band keeps its background edge to
+     edge but holds its content in this centered, max-width column. */
+  --content: 1040px;
+  --gutter: clamp(20px, 5vw, 40px);
+  --pad-x: max(var(--gutter), calc((100% - var(--content)) / 2));
+
   --font-serif:
     "Bookerly", "Charter", "Source Serif 4", "Source Serif Pro", "Literata",
     "Iowan Old Style", "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", Georgia, serif;
@@ -81,7 +80,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: space-between;
   gap: 24px;
   min-height: 60px;
-  padding: 11px clamp(20px, 5vw, 72px);
+  padding: 11px var(--pad-x);
   border-bottom: 1px solid var(--rule-soft);
   background: rgba(244, 244, 244, 0.82);
   backdrop-filter: blur(16px);
@@ -164,10 +163,12 @@ footer a:hover { color: var(--ink); }
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: min(calc(100svh - 60px), 680px);
+  min-height: min(calc(100svh - 60px), 660px);
   display: grid;
-  align-items: end;
-  padding: 48px clamp(20px, 5vw, 72px) 52px;
+  justify-items: center;
+  align-content: center;
+  text-align: center;
+  padding: 56px var(--pad-x);
   overflow: hidden;
   border-bottom: 1px solid var(--rule-soft);
 }
@@ -176,8 +177,8 @@ footer a:hover { color: var(--ink); }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(244, 244, 244, 0.99), rgba(244, 244, 244, 0.78) 60%, rgba(244, 244, 244, 0.96)),
-    linear-gradient(0deg, var(--paper), rgba(244, 244, 244, 0.3) 56%);
+    linear-gradient(0deg, rgba(244, 244, 244, 0.96), rgba(244, 244, 244, 0.62) 50%, rgba(244, 244, 244, 0.96)),
+    linear-gradient(90deg, var(--paper), rgba(244, 244, 244, 0.35) 50%, var(--paper));
 }
 .hero-image {
   position: absolute;
@@ -185,7 +186,7 @@ footer a:hover { color: var(--ink); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 .hero-copy {
   position: relative;
@@ -234,7 +235,7 @@ h3 {
 }
 
 /* Reading voice: descriptive copy is set in the body serif, like the app's
-   prose; chrome (nav, buttons, labels, lists) stays sans. */
+   prose; chrome (nav, buttons, labels) stays sans. */
 .hero-copy p:not(.eyebrow),
 .section-head p {
   font-family: var(--font-serif);
@@ -242,18 +243,21 @@ h3 {
   line-height: 1.6;
 }
 .hero-copy p:not(.eyebrow) {
-  max-width: 560px;
+  max-width: 540px;
+  margin-inline: auto;
   font-size: clamp(1rem, 1.3vw, 1.12rem);
 }
 .section-head p {
+  max-width: 600px;
+  margin-inline: auto;
   font-size: 1.05rem;
-  max-width: 640px;
 }
 
 .hero-actions,
 .download-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
 }
 .hero-actions { margin-top: 24px; }
@@ -285,8 +289,8 @@ h3 {
 }
 .button.primary:hover { background: var(--ink-mid); border-color: var(--ink-mid); }
 .hero-note {
-  margin-top: 18px;
-  max-width: 560px;
+  margin: 18px auto 0;
+  max-width: 520px;
   color: var(--ink-soft);
   font-size: 0.9rem !important;
   line-height: 1.55;
@@ -295,20 +299,21 @@ h3 {
 /* ── Sections ────────────────────────────────────────────────────────────── */
 .download-band,
 .section {
-  padding: 68px clamp(20px, 5vw, 72px);
+  padding: 68px var(--pad-x);
   border-bottom: 1px solid var(--rule-soft);
   scroll-margin-top: 72px;
 }
 .download-band {
   display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 28px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
   background: var(--sheet);
 }
 .section-head {
-  max-width: 760px;
-  margin-bottom: 32px;
+  margin: 0 auto 32px;
+  text-align: center;
 }
 .section-head h2 + p { margin-top: 16px; }
 .features li {
@@ -320,8 +325,9 @@ h3 {
 .architecture img {
   display: block;
   width: 100%;
-  max-width: 1080px;
+  max-width: var(--content);
   height: auto;
+  margin-inline: auto;
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
   background: var(--sheet);
@@ -339,6 +345,7 @@ h3 {
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
   background: var(--sheet);
+  text-align: center;
   transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);
 }
 .card-grid p { color: var(--ink-soft); line-height: 1.58; }
@@ -352,11 +359,13 @@ h3 {
 
 .features ul {
   display: grid;
-  gap: 13px;
-  max-width: 760px;
-  margin: 0;
+  gap: 12px;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
   padding: 0;
   list-style: none;
+  text-align: left;
 }
 .features li {
   position: relative;
@@ -378,10 +387,10 @@ h3 {
 footer {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 18px 24px;
   align-items: center;
-  justify-content: space-between;
-  padding: 28px clamp(20px, 5vw, 72px);
+  justify-content: center;
+  padding: 28px var(--pad-x);
   color: var(--ink-soft);
   font-size: 0.88rem;
 }
@@ -401,13 +410,9 @@ footer {
     overflow-x: auto;
     padding-bottom: 2px;
   }
-  .hero { min-height: 560px; }
+  .hero { min-height: 540px; padding-block: 44px; }
   .download-band,
-  .section { padding: 52px clamp(20px, 5vw, 72px); }
-  .download-band {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+  .section { padding-block: 52px; }
   .card-grid { grid-template-columns: 1fr; }
 }
 
