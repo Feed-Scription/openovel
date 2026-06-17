@@ -144,7 +144,12 @@ export function appendRecentCanon(prev, action, narration, maxChars = 6000) {
     .replace(/```ovl:[a-z-]*[^\n]*\n[\s\S]*?```/gi, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim()
-  const block = `### 读者选择\n${String(action || "").trim()}\n\n${cleanedNarration}`
+  const actionText = String(action || "").trim()
+  // The opening turn has no real reader action — store the narration alone so the
+  // rolling canon doesn't begin with an empty "读者选择" header.
+  const block = actionText
+    ? `### 读者选择\n${actionText}\n\n${cleanedNarration}`
+    : cleanedNarration
   const joined = [String(prev || "").trim(), block].filter(Boolean).join("\n\n")
   if (joined.length <= maxChars) return joined
   const tail = joined.slice(joined.length - maxChars)
@@ -167,4 +172,15 @@ export function buildOpeningEntryText({ prelude, hudInitial, openingBackdrop }) 
     parts.push(["```ovl:bg", `set: ${String(openingBackdrop).trim()}`, "```"].join("\n"))
   }
   return parts.join("\n\n")
+}
+
+// Hidden action that auto-starts the first generated scene on story entry, mirroring
+// the desktop auto-open (src/lib/narrator.js openingTriggerAction → #autoOpenIfFresh).
+// Recent Canon is empty on entry, so the narrator system prompt treats this as the
+// OPENING turn and writes the scene from the Foreground Guidance.
+export function openingTriggerAction(locale = "en") {
+  const zh = String(locale || "").startsWith("zh") || /[㐀-鿿]/.test(String(locale || ""))
+  return zh
+    ? "（开始故事。根据 Foreground Guidance 的开场情境，写出真正的开场场景。）"
+    : "(Begin the story. Use the opening situation in the Foreground Guidance to compose the opening scene.)"
 }
