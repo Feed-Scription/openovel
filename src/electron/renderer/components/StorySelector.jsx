@@ -15,6 +15,21 @@ function gridColumnCount(el) {
   return Math.max(1, tracks.split(" ").filter(Boolean).length)
 }
 
+const RELEASES_URL = "https://github.com/Feed-Scription/openovel/releases"
+
+// Web-demo gate copy for desktop-only actions (new story / import).
+function desktopOnlyMessage(kind) {
+  const zh = String(i18n.language || "").startsWith("zh")
+  if (zh) {
+    return kind === "import"
+      ? `导入故事需要桌面版 openovel。\n下载：${RELEASES_URL}`
+      : `新建故事需要桌面版 openovel（含对话式初始化与后台 Agent）。\n下载：${RELEASES_URL}`
+  }
+  return kind === "import"
+    ? `Importing a story needs the openovel desktop app.\nDownload: ${RELEASES_URL}`
+    : `Creating a new story needs the openovel desktop app (conversational init + background agents).\nDownload: ${RELEASES_URL}`
+}
+
 function formatBytes(n) {
   if (!n || n < 1) return ""
   if (n < 1024) return `${n}B`
@@ -79,6 +94,11 @@ export function StorySelector({ state, actions }) {
   // the file IO; we just trigger and surface the outcome.
   const onPickImport = useCallback(async () => {
     closeMenu()
+    // In the web demo, importing needs the local-first desktop runtime.
+    if (window.openovel?.isWeb) {
+      window.alert(desktopOnlyMessage("import"))
+      return
+    }
     try {
       const r = await window.openovel.importStory()
       if (r?.cancelled) return
@@ -89,6 +109,17 @@ export function StorySelector({ state, actions }) {
       window.alert(`Import failed: ${err?.message || err}`)
     }
   }, [closeMenu])
+
+  // New stories run the conversational initializer + background agents, which
+  // only exist in the desktop app; in the web demo point readers to the download.
+  const onPickNew = useCallback(() => {
+    closeMenu()
+    if (window.openovel?.isWeb) {
+      window.alert(desktopOnlyMessage("new"))
+      return
+    }
+    actions.confirmStorySelection()
+  }, [closeMenu, actions])
 
   // Export → save dialog → VM creates the bundle, main writes it.
   // `kind` = "current" (live state right now) or "initial" (the
@@ -260,6 +291,7 @@ export function StorySelector({ state, actions }) {
         e.preventDefault()
         const item = sel.items[sel.cursor]
         if (item?.isImport) onPickImport()
+        else if (item?.isNew) onPickNew()
         else actions.confirmStorySelection()
       }
     }
@@ -270,8 +302,9 @@ export function StorySelector({ state, actions }) {
   const openStoryItem = useCallback((item, idx) => {
     actions.moveStorySelector(idx - sel.cursor)
     if (item.isImport) onPickImport()
+    else if (item.isNew) onPickNew()
     else actions.confirmStorySelection()
-  }, [actions, onPickImport, sel.cursor])
+  }, [actions, onPickImport, onPickNew, sel.cursor])
 
   return (
     <div className="story-selector">

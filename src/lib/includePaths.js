@@ -69,6 +69,11 @@ export const ASSET_SCHEME = "ovl-asset"
 export function assetUrl(rel) {
   const clean = String(rel || "").trim().replace(/\\/g, "/").replace(/^\/+/, "")
   const encoded = clean.split("/").filter(Boolean).map(encodeURIComponent).join("/")
+  // Web build: there is no privileged ovl-asset:// protocol. The web bridge sets a
+  // per-story HTTP base (e.g. "stories/<id>/") on story entry; serve media from
+  // there, dropping the leading `story/` segment that maps to the story root.
+  const webBase = typeof globalThis !== "undefined" ? globalThis.__OPENOVEL_WEB_ASSET_BASE__ : null
+  if (webBase) return `${webBase}${encoded.replace(/^story\//, "")}`
   return `${ASSET_SCHEME}://local/${encoded}`
 }
 
